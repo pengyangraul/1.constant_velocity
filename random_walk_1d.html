@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Random Walk in 1D</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="random_walk_1d_files/libs/clipboard/clipboard.min.js"></script>
+<script src="random_walk_1d_files/libs/quarto-html/quarto.js"></script>
+<script src="random_walk_1d_files/libs/quarto-html/popper.min.js"></script>
+<script src="random_walk_1d_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="random_walk_1d_files/libs/quarto-html/anchor.min.js"></script>
+<link href="random_walk_1d_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="random_walk_1d_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="random_walk_1d_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="random_walk_1d_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="random_walk_1d_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#random-walk" id="toc-random-walk" class="nav-link active" data-scroll-target="#random-walk"> <span class="header-section-number">1</span> Random Walk</a></li>
+  <li><a href="#the-probability-of-landing-at-a-particular-location" id="toc-the-probability-of-landing-at-a-particular-location" class="nav-link" data-scroll-target="#the-probability-of-landing-at-a-particular-location"> <span class="header-section-number">2</span> The Probability of landing at a particular location</a></li>
+  <li><a href="#probabilities-and-pascals-triangle" id="toc-probabilities-and-pascals-triangle" class="nav-link" data-scroll-target="#probabilities-and-pascals-triangle"> <span class="header-section-number">3</span> Probabilities and Pascal’s Triangle</a></li>
+  <li><a href="#finding-the-probabilities-using-the-factorial-function" id="toc-finding-the-probabilities-using-the-factorial-function" class="nav-link" data-scroll-target="#finding-the-probabilities-using-the-factorial-function"> <span class="header-section-number">4</span> Finding the Probabilities Using the Factorial Function</a></li>
+  <li><a href="#picturing-the-probability-distribution" id="toc-picturing-the-probability-distribution" class="nav-link" data-scroll-target="#picturing-the-probability-distribution"> <span class="header-section-number">5</span> Picturing the Probability Distribution</a></li>
+  <li><a href="#deriving-the-result-from-stirlings-formula" id="toc-deriving-the-result-from-stirlings-formula" class="nav-link" data-scroll-target="#deriving-the-result-from-stirlings-formula"> <span class="header-section-number">6</span> Deriving the Result from Stirling’s Formula</a></li>
+  <li><a href="#simulating-the-probabilities" id="toc-simulating-the-probabilities" class="nav-link" data-scroll-target="#simulating-the-probabilities"> <span class="header-section-number">7</span> Simulating the probabilities</a></li>
+  <li><a href="#how-far-away-should-you-expect" id="toc-how-far-away-should-you-expect" class="nav-link" data-scroll-target="#how-far-away-should-you-expect"> <span class="header-section-number">8</span> How Far Away Should You Expect?</a></li>
+  <li><a href="#example-density-fluctuations-in-a-small-volume-of-gas" id="toc-example-density-fluctuations-in-a-small-volume-of-gas" class="nav-link" data-scroll-target="#example-density-fluctuations-in-a-small-volume-of-gas"> <span class="header-section-number">9</span> Example: Density Fluctuations in a Small Volume of Gas</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Random Walk in 1D</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="random-walk" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Random Walk</h1>
+<p>A Random Walk can be simply explained as a simulation to proceed to the next step in a randomized manner such that we get a different path of propagation each time. Such a simulation can somewhat describe the motion such as Brownian motion of particles, stock ticker movement, living cell movement in a substrate, etc.</p>
+<p>Random walks can be 1D, 2D, 3D,…., etc. with each increase in dimension the motion explained becomes complex but a simulation like this helps a user to have a great visualization and understanding.</p>
+<p>The random walk is central to <em>statistical physics</em>. It is essential in predicting how fast one gas will diffuse into another, how fast heat will spread in a solid, how big fluctuations in pressure will be in a small container, and many other statistical phenomena.</p>
+<p>Einstein used the random walk to find the size of atoms from the Brownian motion.</p>
+<p>The following python code simulates a 1D random walk: - The walk goes along a line, each pace being the same length. - Before each step, you flip a coin. - If it’s heads, you take one step forward. If it’s tails, you take one step back. - The coin is unbiased, so the chances of heads or tails are equal.</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> Randomwalk1D(n): <span class="co">#n here is the no. of steps that we require</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   x <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>   t <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>   xlist <span class="op">=</span> [<span class="dv">0</span>]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>   tlist <span class="op">=</span> [<span class="dv">0</span>]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>   <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span> (<span class="dv">1</span>,n<span class="op">+</span><span class="dv">1</span>):</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>       step <span class="op">=</span> np.random.uniform(<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>       t <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>       <span class="cf">if</span> step <span class="op">&lt;</span> <span class="fl">0.5</span>: <span class="co"># if step is less than 0.5 we move forward    </span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>           x <span class="op">+=</span> <span class="dv">1</span>  <span class="co">#moving in positive direction</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>       <span class="cf">if</span> step <span class="op">&gt;</span> <span class="fl">0.5</span>: <span class="co"># if step is greater than 0.5 we move backward</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>           x <span class="op">+=</span> <span class="op">-</span><span class="dv">1</span> <span class="co">#moving in negative direction</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>       tlist.append(t)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>       xlist.append(x)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> tlist,xlist</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>tlist,xlist <span class="op">=</span> Randomwalk1D(<span class="dv">1000</span>) <span class="co">#creating an object for the Randomwalk1D class and passing value of n as 100</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>plt.plot(tlist,xlist,<span class="st">'r-'</span>, label <span class="op">=</span> <span class="st">"Randwalk1D"</span>) <span class="co"># 'r-' makes the color of the path red</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"1-D Random Walks"</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"t"</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"x"</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="random_walk_1d_files/figure-html/cell-2-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="the-probability-of-landing-at-a-particular-location" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> The Probability of landing at a particular location</h1>
+<p>We want to find the probability of landing at a given spot after a given number of <span class="math inline">\(N\)</span> steps, and, in particular, to find how far away the walk on average from where it started.</p>
+<p>Let’s begin with walks of a few steps, each of unit length, and look for a pattern.</p>
+<p><strong>We define the probability function <span class="math inline">\(f_N(n)\)</span> as the probability that in a walk of <span class="math inline">\(N\)</span> steps of unit length, randomly forward or backward along the line, beginning at <span class="math inline">\(0\)</span>, we end at point <span class="math inline">\(n\)</span>.</strong></p>
+<ul>
+<li>Since we have to end up somewhere, the sum of these probabilities over <span class="math inline">\(n\)</span> must equal 1.</li>
+<li>We will only list nonzero probabilities.</li>
+<li>For a walk of no steps, <span class="math inline">\(f_0(0) = 1\)</span></li>
+<li>For a walk of one step, <span class="math inline">\(f_1(1) = 1/2\)</span>, <span class="math inline">\(f_{1}(-1) = 1/2\)</span></li>
+<li>For a walk of two steps, <span class="math inline">\(f_2(-2) = 1/4\)</span>, <span class="math inline">\(f_2(0) = 1/2\)</span>, <span class="math inline">\(f_2(2) = 1/4\)</span>.</li>
+</ul>
+<p><em>It is perhaps helpful in figuring the probabilities to enumerate the coin flip sequences leading to a particular spot.</em></p>
+<p>For a three-step walk, HHH will land at 3, HHT, HTH and THH will land at 1, and for the negative numbers just reverse H and T. There are a total of <span class="math inline">\(2^3 = 8\)</span> different three-step walks, so the probabilities of the different landing spots are: <span class="math inline">\(f_3(\pm 3) = 1/8\)</span>, <span class="math inline">\(f_3(\pm 1) = 3/8\)</span>.</p>
+<p>For a four-step walk, each configuration of H’s and T’s has a probability of <span class="math inline">\((1/2)^4 = 1/16\)</span>. So <span class="math inline">\(f_4(\pm 4) = 1/16\)</span>, since only one walk HHHH or TTTT gets there. We also have <span class="math inline">\(f_4(\pm 2) = 1/4\)</span>, and <span class="math inline">\(f_4(0) = 3/8\)</span>.</p>
+</section>
+<section id="probabilities-and-pascals-triangle" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Probabilities and Pascal’s Triangle</h1>
+<table class="table">
+<caption>Pascal’s Triangle — every entry is the sum of the two diagonally above</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(n\)</span></th>
+<th style="text-align: center;">-5</th>
+<th style="text-align: center;">-4</th>
+<th style="text-align: center;">-3</th>
+<th style="text-align: center;">-2</th>
+<th style="text-align: center;">-1</th>
+<th style="text-align: center;">0</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">2</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">4</th>
+<th style="text-align: center;">5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(f_0(n)\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(2f_1(n)\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(2^2f_1(n)\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(2^3f_1(n)\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(2^4f_1(n)\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(2^5f_1(n)\)</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+<p>These numbers are in fact the coefficients that appear in the binomial expansion of <span class="math inline">\((a+b)^N\)</span>.</p>
+<p>For example, the row for <span class="math inline">\(2^5f_5(n)\)</span> mirrors the binomial coefficients:</p>
+<p><span class="math display">\[
+(a+b)^5 = a^5 + 5a^4 b + 10 a^3 b^2 + 10 a^2 b^3  + 5ab^4 + b^5.
+\]</span></p>
+<p>To see how these binomial coefficients relate to our random walk, we write</p>
+<p><span class="math display">\[
+(a + b)^5 = (a + b) \times (a+b) \times (a+b) \times (a+b) \times(a+b)
+\]</span></p>
+<p>and think of it as <em>the sum of all products that can be written by choosing one term from each bracket</em>. There are <span class="math inline">\(2^5 = 32\)</span> such terms (choosing one of two from each of the five brackets), so the coefficient of <span class="math inline">\(a^3b^2\)</span> must be the number of these 32 terms which have just 3 <span class="math inline">\(a\)</span>s and 2 <span class="math inline">\(b\)</span>s.</p>
+<p>But that is the same as the number of different sequences that can be written by rearranging HHHTT, so it is clear that the random walk probabilities and the binomial coefficients are the same sets of numbers (except that the probabilities must of course be divided by 32 so that they add up to one).</p>
+</section>
+<section id="finding-the-probabilities-using-the-factorial-function" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Finding the Probabilities Using the Factorial Function</h1>
+<p>The efficient way to calculate these coefficients is to use the <em>factorial</em> function. Suppose we have five distinct objects, A, B, C, D, E. How many different sequences can we find: ABCDE, ABDCE, BDCAE, etc.? Well, the first member of the sequence could be any of the five. The next is one of the remaining four, etc. So, the total number of different sequences is <span class="math inline">\(5\times4\times3\times2\times1\)</span> which is called “five factorial” and written <span class="math inline">\(5!\)</span></p>
+<p>But how many different sequences can we make with HHHTT? In other words, if we wrote down all <span class="math inline">\(5!\)</span> (that’s 120) of them, how many would really be different?</p>
+<p>Since the two Ts are identical, we wouldn’t be able to tell apart sequences in which they had been switched, so that cuts us down from 120 sequences to 60. But the three Hs are also identical, and if they’d been different there would have been <span class="math inline">\(3! = 6\)</span> different ways of arranging them. Since they are identical, all six ways come out the same, so we have to divide the 60 by 6, giving only 10 different sequences of 3 Hs and 2 Ts.</p>
+<p>This same argument works for any number of Hs and Ts. The total number of different sequences of <span class="math inline">\(m\)</span> Hs and <span class="math inline">\(n\)</span> Ts is <span class="math inline">\((m+n)!/(m!n!)\)</span>. The two factorials in the denominator coming from the fact that rearranging the Hs among themselves, and the Ts among themselves, gives back the same sequence.</p>
+<p>It is also worth mentioning that in the five-step walk ending at <span class="math inline">\(-1\)</span>, which has probability <span class="math inline">\(10/25\)</span>, the fourth step must have been either at 0 or -2. Glancing at Pascal’s Triangle, we see that the probability of a four-step walk ending at 0 is 6/24, and of ending at -2 is 4/24. In either case, the probability of the next step being to -1 is <span class="math inline">\(1/2\)</span> , so the total probability of reaching <span class="math inline">\(-1\)</span> in five steps is <span class="math inline">\(1/2 \times 6/24 + 1/2 \times 4/24\)</span>. So the property of Pascal’s triangle that every entry is the sum of the two diagonally above is consistent with our probabilities.</p>
+</section>
+<section id="picturing-the-probability-distribution" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Picturing the Probability Distribution</h1>
+<p>It is worth visualizing this probability distribution to get some feel for the random walk. For 5 steps, it looks like the following plot.</p>
+<center>
+<img src="random_walk_5_step_from_0.png" width="600px" title="Title: An elephant" alt="A drawing of an elephant">
+</center>
+<p>Let’s now consider a longer walk. After 100 steps, what is the probability of landing on the integer <span class="math inline">\(n\)</span>?</p>
+<p>This will happen if the number of forward steps exceeds the number of backward steps by <span class="math inline">\(n\)</span> (which could be a negative number). That is</p>
+<p><span class="math display">\[
+n_{forward} - n_{backward} = n, \quad n_{forward} + n_{backward} = 100,
+\]</span></p>
+<p>from which we can compute</p>
+<p><span class="math display">\[
+n_{forward} = \frac{1}{2}(100 + n), \quad n_{backward} = \frac{1}{2}(100 - n).
+\]</span></p>
+<p>Note that in the general case, if the total number of steps is <span class="math inline">\(N\)</span>, then the possible final position <span class="math inline">\(n\)</span> always satisfies that <span class="math inline">\(N \pm n\)</span> is an even number. So <span class="math inline">\(N\)</span> and <span class="math inline">\(n\)</span> must have the same even- and odd-ness.</p>
+<p>The total number of paths ending at the particular point <span class="math inline">\(n\)</span>, from the heads and tails argument above, is</p>
+<p><span class="math display">\[
+\frac{N!}{n_{forward}! n_{backward}!} = \frac{100!}{((100+n)/2)!((100-n)/2)!}.
+\]</span></p>
+<p>To find the actual probability of ending at <span class="math inline">\(n\)</span> after 100 steps, we need to know what fraction of all possible paths end at <span class="math inline">\(n\)</span>. (Since the coin toss is purely random, we take it all possible paths are equally likely). The total number of possible 100-step walks is <span class="math inline">\(2^{100}\simeq 1.26\times 10^{30}\)</span>.</p>
+<p>In the following, we write a Python function that computes the probability <span class="math inline">\(f_N(n)\)</span> of the random walk landing at position <span class="math inline">\(n\)</span>, given <span class="math inline">\(N\)</span> steps.</p>
+<p>We shall make use of the following facts: 1. If <span class="math inline">\(|n| &gt; N\)</span>, then <span class="math inline">\(f_N(n) = 0\)</span>. 2. <span class="math inline">\(f_N(n) = f_N(-n)\)</span>. 3. <span class="math inline">\(n\)</span> and <span class="math inline">\(N\)</span> should either be both even or both odd numbers, otherwise <span class="math inline">\(f_N(n) = 0\)</span>.</p>
+<div class="cell" data-execution_count="82">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> comb</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The following function compute the probabilities of landing at position n, for N steps.</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> find_end_probabilities(N):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    no_total_paths <span class="op">=</span> <span class="dv">2</span><span class="op">**</span>N</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    probability_list <span class="op">=</span> np.zeros(<span class="dv">2</span><span class="op">*</span>N <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (N <span class="op">%</span> <span class="dv">2</span>) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        nlist <span class="op">=</span> np.arange(<span class="dv">0</span>,N<span class="op">+</span><span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        no_paths_list <span class="op">=</span> np.zeros_like(nlist)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> jj <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(nlist)):</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>           no_paths_list[jj] <span class="op">=</span> comb(N,<span class="bu">int</span>((N <span class="op">-</span> nlist[jj])<span class="op">/</span><span class="dv">2</span>))</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        probability_list[N::<span class="dv">2</span>] <span class="op">=</span> no_paths_list <span class="op">/</span> no_total_paths</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        probability_list[N<span class="op">-</span><span class="dv">2</span>::<span class="op">-</span><span class="dv">2</span>] <span class="op">=</span> probability_list[N<span class="op">+</span><span class="dv">2</span>::<span class="dv">2</span>]</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        nlist <span class="op">=</span> np.arange(<span class="dv">1</span>,N<span class="op">+</span><span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        no_paths_list <span class="op">=</span> np.zeros_like(nlist)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> jj <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(nlist)):</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>           no_paths_list[jj] <span class="op">=</span> comb(N,<span class="bu">int</span>((N <span class="op">-</span> nlist[jj])<span class="op">/</span><span class="dv">2</span>))</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        probability_list[N<span class="op">+</span><span class="dv">1</span>::<span class="dv">2</span>] <span class="op">=</span> no_paths_list<span class="op">/</span> no_total_paths</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        probability_list[N<span class="op">-</span><span class="dv">1</span>::<span class="op">-</span><span class="dv">2</span>] <span class="op">=</span> probability_list[N<span class="op">+</span><span class="dv">1</span>::<span class="dv">2</span>]</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> probability_list</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>Nlist <span class="op">=</span> np.arange(<span class="op">-</span>N,N<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>probability_list <span class="op">=</span> find_end_probabilities(N)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>markerline, stemlines, baseline <span class="op">=</span> plt.stem(Nlist,probability_list)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co"># setting property of baseline with color red and linewidth 1</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>plt.setp(baseline,linestyle<span class="op">=</span><span class="st">'--'</span>, color<span class="op">=</span><span class="st">'r'</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="vs">r"$n$"</span>)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="vs">r"$f_N(n)$"</span>)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="random_walk_1d_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>It is also worth plotting this logarithmically, to get a clearer idea of how the probabilities are dropping off well away from the center.</p>
+<div class="cell" data-execution_count="88">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.plot(Nlist,np.log(probability_list),<span class="st">'.'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="vs">r"$n$"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="vs">r"$\ln [f_N(n)]$"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\pengy\AppData\Local\Temp\ipykernel_25560\1863900712.py:1: RuntimeWarning: divide by zero encountered in log
+  plt.plot(Nlist,np.log(probability_list),'.')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="random_walk_1d_files/figure-html/cell-4-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>This looks a lot like a parabola — and it is! Well, to be precise, the logarithm of the probability distribution tends to a parabola as <span class="math inline">\(N\)</span> becomes large, provided <span class="math inline">\(n\)</span> is much less than <span class="math inline">\(N\)</span>, and in fact this is the important limit in statistical physics. The natural log of the probability of ending the path at <span class="math inline">\(n\)</span> tends to <span class="math inline">\(\ln C - n^2/2N\)</span>, where the constant <span class="math inline">\(C\)</span> is some constant depending on <span class="math inline">\(n\)</span> and <span class="math inline">\(N\)</span>, which we will find out later.</p>
+<p>This means that the probability <span class="math inline">\(f_N(n)\)</span> is given by:</p>
+<p><span class="math display">\[
+f_N(n) = C e^{-\frac{n^2}{2N}}.
+\]</span></p>
+<p>This is called a <em>Gaussian probability distribution</em>. We will come to this later.</p>
+</section>
+<section id="deriving-the-result-from-stirlings-formula" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Deriving the Result from Stirling’s Formula</h1>
+<p>For large <span class="math inline">\(N\)</span>, the exponential dependence on <span class="math inline">\(n^2\)</span> can be derived mathematically using Stirling’s formula <span class="math inline">\(\ln n!\simeq n\ln n − n + \frac{1}{2}\ln 2\pi n\)</span>. We will not prove this here.</p>
+<p>For a walk of <span class="math inline">\(N\)</span> steps, the total number of paths ending at <span class="math inline">\(n\)</span> is</p>
+<p><span class="math display">\[
+\frac{N!}{((N+n)/2)!((N-n)/2)!}
+\]</span></p>
+<p>To find the probability <span class="math inline">\(f_N(n)\)</span> we took one of these paths, we divide by the number of all possible paths, which is <span class="math inline">\(2^N\)</span>.</p>
+<p>Applying Stirling’s formula</p>
+<p><span class="math display">\[
+\begin{align}
+\ln f_N(n) &amp;= \ln \left(\frac{N!}{((N+n)/2)!((N-n)/2)!} \cdot \frac{1}{2^N}\right) \\
+&amp;\simeq N\ln N - N - \left(\frac{N+n}{2}\right)\ln \left(\frac{N+n}{2}\right) + \left(\frac{N+n}{2}\right) - \left(\frac{N-n}{2}\right)\ln \left(\frac{N-n}{2}\right) + \left(\frac{N-n}{2}\right) - N \ln 2 + \frac{1}{2}\ln\left(\frac{2\pi N}{\pi^2(N^2 - n^2)}\right) \\
+&amp; = N \ln N - \left(\frac{N+n}{2}\right)\ln \left(\frac{N+n}{2}\right) - \left(\frac{N-n}{2}\right)\ln \left(\frac{N-n}{2}\right) - N \ln 2 + \ln \frac{2}{\sqrt{2\pi (N - \frac{n^2}{N})}}.
+\end{align}
+\]</span></p>
+<p>We shall then using another approximating formula,</p>
+<p><span class="math display">\[
+\ln (1 \pm x) \simeq \pm x  - x^2/2
+\]</span></p>
+<p>for small <span class="math inline">\(x\)</span>. This leads to</p>
+<p><span class="math display">\[
+\ln \left(\frac{N \pm n}{2}\right) \simeq \ln \frac{N}{2} + \ln\left(1\pm \frac{n}{N} \right)
+\simeq \ln \frac{N}{2} \pm \frac{n}{N} - \frac{1}{2}\left(\frac{n}{N}\right)^2.
+\]</span></p>
+<p>Thus, we have</p>
+<p><span class="math display">\[
+\begin{align}
+\ln f_N(n) &amp;\simeq N \ln N - \left(\frac{N+n}{2}\right)(\ln \frac{N}{2} + \frac{n}{N} - \frac{1}{2}\left(\frac{n}{N}\right)^2) - \left(\frac{N-n}{2}\right)(\ln \frac{N}{2} - \frac{n}{N} - \frac{1}{2}\left(\frac{n}{N}\right)^2) - N \ln 2 +  \ln \frac{2}{\sqrt{2\pi N}}\\
+&amp;= N\ln N - N\left(\ln N - \ln 2 - \frac{1}{2}\frac{n^2}{N^2}\right) - \frac{n^2}{N} - N\ln 2 +  \ln \frac{2}{\sqrt{2\pi N}} \\
+&amp;= -\frac{n^2}{2N} +  \ln \frac{2}{\sqrt{2\pi N}}.
+\end{align}
+\]</span></p>
+<p>This proves the observation that the natural logarithm of the probability is quadratic in <span class="math inline">\(n\)</span> with a constant.</p>
+<p>Hence, we can write, for large <span class="math inline">\(N\)</span> and <span class="math inline">\(N \gg n\)</span>,</p>
+<p><span class="math display">\[
+f_N(n) = \frac{2}{\sqrt{2\pi N}}e^{-\frac{n^2}{2N}}.
+\]</span></p>
+</section>
+<section id="simulating-the-probabilities" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Simulating the probabilities</h1>
+<p>In the following python code, we simulate the probabilities <span class="math inline">\(f_N(n)\)</span>, by simulation: - We take <code>Nwalker</code> number of walkers. Each walker moves according to the random walk algorithm. - For each walker, we simulate the end point of the walker after <code>Nstep</code> steps. - We count the frequencies for landing at each positions, and compute the corresponding probabilities. - You can see the simulated probabilities agrees with the Gaussian distribution!</p>
+<div class="cell" data-execution_count="52">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> Randomwalk1D(Nstep, Nwalker): <span class="co">#N here is the no. of steps that we require</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.zeros(Nwalker,dtype <span class="op">=</span> <span class="bu">int</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span> (<span class="dv">1</span>,Nstep<span class="op">+</span><span class="dv">1</span>):</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        step <span class="op">=</span> np.random.rand(Nwalker)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        forward_ids <span class="op">=</span> step<span class="op">&lt;</span><span class="fl">0.5</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        backward_ids <span class="op">=</span> <span class="op">~</span>forward_ids</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        x[forward_ids] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        x[backward_ids] <span class="op">-=</span> <span class="dv">1</span> </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> stat_prob(x,Nstep):</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.bincount(x<span class="op">+</span>Nstep,minlength<span class="op">=</span><span class="dv">2</span><span class="op">*</span>Nstep<span class="op">+</span><span class="dv">1</span>)<span class="op">/</span><span class="bu">len</span>(x)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>Nstep <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>Nwalker <span class="op">=</span> <span class="dv">1000000</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>gaussian_dist <span class="op">=</span> <span class="dv">2</span><span class="op">/</span>(np.sqrt(<span class="dv">2</span><span class="op">*</span>np.pi<span class="op">*</span>Nstep))<span class="op">*</span>np.exp(<span class="op">-</span>nlist<span class="op">**</span><span class="dv">2</span><span class="op">/</span>(<span class="dv">2</span><span class="op">*</span>Nstep))</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>nlist <span class="op">=</span> np.arange(<span class="op">-</span>Nstep,Nstep<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Randomwalk1D(Nstep,Nwalker)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>probabilities <span class="op">=</span> stat_prob(x,Nstep)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>markerline, stemlines, baseline <span class="op">=</span> plt.stem(nlist,probabilities,label<span class="op">=</span><span class="st">'Simulated'</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>plt.plot(nlist,gaussian_dist,<span class="st">'r--'</span>,label<span class="op">=</span><span class="st">'Gaussian Distribution'</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>plt.setp(baseline,linewidth<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="vs">r"$n$"</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="vs">r"$f_N(n)$"</span>)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="random_walk_1d_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="how-far-away-should-you-expect" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> How Far Away Should You Expect?</h1>
+<p>Since forward and backward steps are equally likely at all times, the expected average finishing position must be back at the origin. The interesting question is how far away from the origin, on average, we can expect to land, <em>regardless of direction</em>. To get rid of the direction, we compute the expected value of the square of the landing distance from the origin, the “mean square” distance, then take its square root. <em>This is called the “root mean square” or rms distance</em>.</p>
+<p>For example, taking the probabilities for the five step walk from the figure above, and adding together <span class="math inline">\(+5\)</span> with <span class="math inline">\(-5\)</span>, etc., we find the expectation value of <span class="math inline">\(n^2\)</span> is:</p>
+<p><span class="math display">\[
+2 \times 1/32 \times 5^2 + 2 \times 5/32 \times 3^2 + 2 \times 10/32 \times 1^2 = 5.
+\]</span></p>
+<p>That is, the rms distance from the origin after <span class="math inline">\(5\)</span> steps is <span class="math inline">\(\sqrt{5}\)</span>.</p>
+<p><strong>The root mean square distance from the origin after a random walk of <span class="math inline">\(N\)</span> unit steps is <span class="math inline">\(\sqrt{N}\)</span>.</strong></p>
+<p>A neat way to prove this for any number of steps is to introduce the idea of a <em>random variable</em>. If <span class="math inline">\(x_1\)</span> is such a variable, it takes the value <span class="math inline">\(+1\)</span> or <span class="math inline">\(-1\)</span> with equal likelihood each time we check it. In other words, if you ask me “What’s the value of <span class="math inline">\(x_1\)</span> ?” I flip a coin, and reply “+1” if it’s heads, “-1” if it’s tails. On the other hand, if you ask me “What’s the value of <span class="math inline">\(x_1^2\)</span> ?” I can immediately say “1” without bothering to flip a coin. We use brackets <span class="math inline">\(\langle \cdot \rangle\)</span> to denote averages (that is, expectation values) so <span class="math inline">\(\langle x_1\rangle =0\)</span>, (for an unbiased coin), <span class="math inline">\(\langle x_1^2\rangle=1\)</span>.</p>
+<p>The endpoint of a random walk of <span class="math inline">\(N\)</span> steps can be written as a sum of <span class="math inline">\(N\)</span> such random variables:</p>
+<p><span class="math display">\[
+\mathrm{path \  endpoint} = x_1 + x_2 + \dots + x_N.
+\]</span></p>
+<p>The average value, or <em>the expectation value</em>, of the square of the path length is</p>
+<p><span class="math display">\[
+\langle  (x_1 + x_2 + \dots + x_N)^2 \rangle = \langle (\sum_{i=1}^N x_i )(\sum_{j=1}^N x_j)\rangle = \sum_{ij}\langle x_i x_j \rangle.
+\]</span></p>
+<p>This means we can write the expectation value of the square of the path length as a sum over all possible pairs <span class="math inline">\(\langle x_i x_j \rangle\)</span>. - If <span class="math inline">\(i = j\)</span>, these terms are <span class="math inline">\(\langle x_i^2 \rangle = 1\)</span>. - If <span class="math inline">\(i \neq j\)</span>, since <span class="math inline">\(x_i\)</span> and <span class="math inline">\(x_j\)</span> are independent, the product <span class="math inline">\(x_i x_j\)</span> can take either <span class="math inline">\(1\)</span> or <span class="math inline">\(-1\)</span> with equal probabilities. Thus, the expectation value is zero in these cases.</p>
+<p>Hence, we can write</p>
+<p><span class="math display">\[
+\langle  (x_1 + x_2 + \dots + x_N)^2 \rangle = \sum_{i=1}^N \langle x_i^2\rangle = N.
+\]</span></p>
+<p><strong>It follows that the rms deviation is <span class="math inline">\(\sqrt{N}\)</span> in the general case.</strong></p>
+</section>
+<section id="example-density-fluctuations-in-a-small-volume-of-gas" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Example: Density Fluctuations in a Small Volume of Gas</h1>
+<p>Suppose we have a small box containing <span class="math inline">\(N\)</span> molecules of gas. We assume any interaction between the molecules is negligible, they are bouncing around inside the box independently.</p>
+<p>If at some instant we insert a partition down the exact middle of the box, we expect on average to find 50% of the molecules to be in the right-hand half of the box.</p>
+<p>The question is: how close to <span class="math inline">\(50\%\)</span>? How much deviation are we likely to see? Is <span class="math inline">\(51\%\)</span> very unlikely?</p>
+<p>Since the <span class="math inline">\(N\)</span> molecules are moving about the box in a random fashion, we can assign a random variable <span class="math inline">\(y_n\)</span> to each molecule, where <span class="math inline">\(y_n=1\)</span> if the <span class="math inline">\(n\)</span>-th molecule is in the right hand half, <span class="math inline">\(y_n=0\)</span> if the <span class="math inline">\(n\)</span>-th molecule is in the left-hand half of the box, and the values 1 and 0 are equally probable. The total number of molecules <span class="math inline">\(N_R\)</span> in the right-hand half of the box is then:</p>
+<p><span class="math display">\[
+N_R = y_1 + y_2 + \dots + y_N.
+\]</span></p>
+<p>This sum of <span class="math inline">\(N\)</span> random variables looks a lot like the random walk! In fact, the two are equivalent. Define a random variable <span class="math inline">\(x_n\)</span> by:</p>
+<p><span class="math display">\[
+y_n = \frac{1}{2}(1 + x_n).
+\]</span></p>
+<p>Since <span class="math inline">\(y_n\)</span> takes the values 0 and 1 with equal probability, <span class="math inline">\(x_n\)</span> takes the values -1 and +1 with equal probability – so <span class="math inline">\(x_n\)</span> is identical to our random walk one-step variable above. Therefore, <span class="math inline">\(N_R\)</span> = y_1 + y_2 + + y_N = + x_1 + x_2 + x_N.</p>
+<p>We see that</p>
+<p><span class="math display">\[
+\langle N_R \rangle  = \frac{N}{2}.
+\]</span></p>
+<p>Moreover, we introduce the <em>variance</em>, which measures the fluctuation near the expectation values,</p>
+<p><span class="math display">\[
+\langle (N_R - N/2)^2 \rangle = N.
+\]</span></p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

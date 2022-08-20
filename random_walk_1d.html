@@ -405,7 +405,8 @@ f_N(n) = C e^{-\frac{n^2}{2N}}.
 <p><span class="math display">\[
 \begin{align}
 \ln f_N(n) &amp;= \ln \left(\frac{N!}{((N+n)/2)!((N-n)/2)!} \cdot \frac{1}{2^N}\right) \\
-&amp;\simeq N\ln N - N - \left(\frac{N+n}{2}\right)\ln \left(\frac{N+n}{2}\right) + \left(\frac{N+n}{2}\right) - \left(\frac{N-n}{2}\right)\ln \left(\frac{N-n}{2}\right) + \left(\frac{N-n}{2}\right) - N \ln 2 + \frac{1}{2}\ln\left(\frac{2\pi N}{\pi^2(N^2 - n^2)}\right) \\
+&amp;\simeq N\ln N - N - \left(\frac{N+n}{2}\right)\ln \left(\frac{N+n}{2}\right) + \left(\frac{N+n}{2}\right)  \\
+&amp;- \left(\frac{N-n}{2}\right)\ln \left(\frac{N-n}{2}\right) + \left(\frac{N-n}{2}\right) - N \ln 2 + \frac{1}{2}\ln\left(\frac{2\pi N}{\pi^2(N^2 - n^2)}\right) \\
 &amp; = N \ln N - \left(\frac{N+n}{2}\right)\ln \left(\frac{N+n}{2}\right) - \left(\frac{N-n}{2}\right)\ln \left(\frac{N-n}{2}\right) - N \ln 2 + \ln \frac{2}{\sqrt{2\pi (N - \frac{n^2}{N})}}.
 \end{align}
 \]</span></p>
@@ -507,7 +508,7 @@ N_R = y_1 + y_2 + \dots + y_N.
 <p><span class="math display">\[
 y_n = \frac{1}{2}(1 + x_n).
 \]</span></p>
-<p>Since <span class="math inline">\(y_n\)</span> takes the values 0 and 1 with equal probability, <span class="math inline">\(x_n\)</span> takes the values -1 and +1 with equal probability – so <span class="math inline">\(x_n\)</span> is identical to our random walk one-step variable above. Therefore, <span class="math inline">\(N_R\)</span> = y_1 + y_2 + + y_N = + x_1 + x_2 + x_N.</p>
+<p>Since <span class="math inline">\(y_n\)</span> takes the values 0 and 1 with equal probability, <span class="math inline">\(x_n\)</span> takes the values -1 and +1 with equal probability – so <span class="math inline">\(x_n\)</span> is identical to our random walk one-step variable above. Therefore, <span class="math inline">\(N_R = y_1 + y_2 + \dots + y_N = \frac{N}{2} + x_1 + x_2 + \dots x_N\)</span>.</p>
 <p>We see that</p>
 <p><span class="math display">\[
 \langle N_R \rangle  = \frac{N}{2}.

@@ -236,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(2^2f_1(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2^2f_2(n)\)</span></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
@@ -250,7 +250,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td style="text-align: center;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><span class="math inline">\(2^3f_1(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2^3f_3(n)\)</span></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;">1</td>
@@ -264,7 +264,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(2^4f_1(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2^4f_4(n)\)</span></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;">1</td>
 <td style="text-align: center;"></td>
@@ -278,7 +278,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td style="text-align: center;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><span class="math inline">\(2^5f_1(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2^5f_5(n)\)</span></td>
 <td style="text-align: center;">1</td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;">5</td>
@@ -311,7 +311,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>But how many different sequences can we make with HHHTT? In other words, if we wrote down all <span class="math inline">\(5!\)</span> (that’s 120) of them, how many would really be different?</p>
 <p>Since the two Ts are identical, we wouldn’t be able to tell apart sequences in which they had been switched, so that cuts us down from 120 sequences to 60. But the three Hs are also identical, and if they’d been different there would have been <span class="math inline">\(3! = 6\)</span> different ways of arranging them. Since they are identical, all six ways come out the same, so we have to divide the 60 by 6, giving only 10 different sequences of 3 Hs and 2 Ts.</p>
 <p>This same argument works for any number of Hs and Ts. The total number of different sequences of <span class="math inline">\(m\)</span> Hs and <span class="math inline">\(n\)</span> Ts is <span class="math inline">\((m+n)!/(m!n!)\)</span>. The two factorials in the denominator coming from the fact that rearranging the Hs among themselves, and the Ts among themselves, gives back the same sequence.</p>
-<p>It is also worth mentioning that in the five-step walk ending at <span class="math inline">\(-1\)</span>, which has probability <span class="math inline">\(10/2^5\)</span>, the fourth step must have been either at 0 or -2. Glancing at Pascal’s Triangle, we see that the probability of a four-step walk ending at 0 is 6/24, and of ending at -2 is 4/2^4. In either case, the probability of the next step being to -1 is <span class="math inline">\(1/2\)</span> , so the total probability of reaching <span class="math inline">\(-1\)</span> in five steps is <span class="math inline">\(1/2 \times 6/2^4 + 1/2 \times 4/2^4\)</span>. So the property of Pascal’s triangle that every entry is the sum of the two diagonally above is consistent with our probabilities.</p>
+<p>It is also worth mentioning that in the five-step walk ending at <span class="math inline">\(-1\)</span>, which has probability <span class="math inline">\(10/2^5\)</span>, the fourth step must have been either at 0 or -2. Glancing at Pascal’s Triangle, we see that the probability of a four-step walk ending at 0 is 6/24, and of ending at -2 is <span class="math inline">\(4/2^4\)</span>. In either case, the probability of the next step being to -1 is <span class="math inline">\(1/2\)</span> , so the total probability of reaching <span class="math inline">\(-1\)</span> in five steps is <span class="math inline">\(1/2 \times 6/2^4 + 1/2 \times 4/2^4\)</span>. So the property of Pascal’s triangle that every entry is the sum of the two diagonally above is consistent with our probabilities.</p>
 </section>
 <section id="picturing-the-probability-distribution" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Picturing the Probability Distribution</h1>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.38">
+<meta name="generator" content="quarto-1.1.145">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,78 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -37,13 +105,30 @@ ul.task-list{list-style: none;}
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc">
+  <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#newtons-second-law" id="toc-newtons-second-law" class="nav-link active" data-scroll-target="#newtons-second-law"> <span class="header-section-number">1</span> Newton’s second law</a>
+  <li><a href="#newtons-second-law" id="toc-newtons-second-law" class="nav-link active" data-scroll-target="#newtons-second-law"><span class="toc-section-number">1</span>  Newton’s second law</a>
   <ul class="collapse">
-  <li><a href="#acceleration-and-forces-on-a-lunar-lander" id="toc-acceleration-and-forces-on-a-lunar-lander" class="nav-link" data-scroll-target="#acceleration-and-forces-on-a-lunar-lander"> <span class="header-section-number">1.1</span> Acceleration and Forces on a Lunar Lander</a></li>
+  <li><a href="#more-on-vectors" id="toc-more-on-vectors" class="nav-link" data-scroll-target="#more-on-vectors"><span class="toc-section-number">1.1</span>  More on vectors</a></li>
+  <li><a href="#acceleration-and-forces-on-a-lunar-lander" id="toc-acceleration-and-forces-on-a-lunar-lander" class="nav-link" data-scroll-target="#acceleration-and-forces-on-a-lunar-lander"><span class="toc-section-number">1.2</span>  Acceleration and Forces on a Lunar Lander</a></li>
+  </ul></li>
+  <li><a href="#force-models" id="toc-force-models" class="nav-link" data-scroll-target="#force-models"><span class="toc-section-number">2</span>  Force Models</a>
+  <ul class="collapse">
+  <li><a href="#force-model-gravity" id="toc-force-model-gravity" class="nav-link" data-scroll-target="#force-model-gravity"><span class="toc-section-number">2.1</span>  Force model: Gravity</a>
+  <ul class="collapse">
+  <li><a href="#newtons-universal-law-of-gravity" id="toc-newtons-universal-law-of-gravity" class="nav-link" data-scroll-target="#newtons-universal-law-of-gravity">Newton’s universal law of gravity</a></li>
+  <li><a href="#constant-gravity" id="toc-constant-gravity" class="nav-link" data-scroll-target="#constant-gravity">Constant gravity</a></li>
+  </ul></li>
+  <li><a href="#force-model-viscous-force" id="toc-force-model-viscous-force" class="nav-link" data-scroll-target="#force-model-viscous-force"><span class="toc-section-number">2.2</span>  Force model: Viscous Force</a>
+  <ul class="collapse">
+  <li><a href="#drag-force-at-low-velocities" id="toc-drag-force-at-low-velocities" class="nav-link" data-scroll-target="#drag-force-at-low-velocities">Drag Force at Low Velocities</a></li>
+  <li><a href="#drag-force-at-high-velocities" id="toc-drag-force-at-high-velocities" class="nav-link" data-scroll-target="#drag-force-at-high-velocities">Drag Force at High Velocities</a></li>
+  <li><a href="#general-model-for-fluid-drag" id="toc-general-model-for-fluid-drag" class="nav-link" data-scroll-target="#general-model-for-fluid-drag">General Model for Fluid Drag</a></li>
+  <li><a href="#example-falling-raindrop" id="toc-example-falling-raindrop" class="nav-link" data-scroll-target="#example-falling-raindrop">Example: Falling Raindrop</a></li>
+  </ul></li>
+  <li><a href="#force-model-spring-force" id="toc-force-model-spring-force" class="nav-link" data-scroll-target="#force-model-spring-force"><span class="toc-section-number">2.3</span>  Force Model: Spring Force</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -68,20 +153,229 @@ ul.task-list{list-style: none;}
 
 <section id="newtons-second-law" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Newton’s second law</h1>
-<p>The relation between force <span class="math inline">\(\boldsymbol{F}\)</span> and accelaration <span class="math inline">\(\boldsymbol{a}\)</span> is</p>
-<p><span class="math display">\[
+<p>The relation between force <span class="math inline">\(\boldsymbol{F}\)</span> and accelaration <span class="math inline">\(\boldsymbol{a}\)</span> is <span class="math display">\[
 \boldsymbol{F} = m \boldsymbol{a}.
-\]</span></p>
+\]</span> - Here, <span class="math inline">\(\boldsymbol{F}\)</span> and <span class="math inline">\(\boldsymbol{a}\)</span> are vectors, with magnitudes and directions. - <span class="math inline">\(\boldsymbol{F} = \boldsymbol{F}_{net}\)</span> is the net (total) force on the object, namely <span class="math display">\[
+  \boldsymbol{F}_{net} = \sum_j \boldsymbol{F}_j.
+  \]</span></p>
+<section id="more-on-vectors" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="more-on-vectors"><span class="header-section-number">1.1</span> More on vectors</h2>
 <ul>
-<li>Here, <span class="math inline">\(\boldsymbol{F}\)</span> and <span class="math inline">\(\boldsymbol{a}\)</span> are vectors, with magnitudes and directions.</li>
 <li>In 1D, the directions are either left or right. One can use <em>positive</em> or <em>negative</em> sign to indicate the direction.</li>
-<li><span class="math inline">\(\boldsymbol{F} = \boldsymbol{F}_{net}\)</span> is the net (total) force on the object, namely <span class="math display">\[
-\boldsymbol{F}_{net} = \sum_j \boldsymbol{F}_j.
-\]</span></li>
+<li>Namely, we can introduce a <em>unit vector</em> <span class="math inline">\(\hat{\boldsymbol{x}}\)</span>, which is of magnitude 1 and with direction to the right.</li>
+<li>Any other vectors can be written as <span class="math inline">\(\boldsymbol{x} = x \hat{\boldsymbol{x}}\)</span>, where <span class="math inline">\(x&gt;0\)</span> means the vector is pointing to the right. Note that the magnitude of the vector will be <span class="math inline">\(|x|\)</span>.</li>
 </ul>
-<section id="acceleration-and-forces-on-a-lunar-lander" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="acceleration-and-forces-on-a-lunar-lander"><span class="header-section-number">1.1</span> Acceleration and Forces on a Lunar Lander</h2>
+</section>
+<section id="acceleration-and-forces-on-a-lunar-lander" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="acceleration-and-forces-on-a-lunar-lander"><span class="header-section-number">1.2</span> Acceleration and Forces on a Lunar Lander</h2>
 <p>You are leading a team that is building the return module for the next lunar expedition. You have designed a module that breaches if exposed to air resistance forces above <span class="math inline">\(10^6\)</span> N for more than <span class="math inline">\(5\)</span> s. The mass of the module is <span class="math inline">\(5000\)</span> kg.</p>
+<p>The landing process is sketched in <a href="#fig-lunar_lander">Figure&nbsp;1</a> (a).</p>
+<div id="fig-lunar_lander" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./force_1d_files/lunar_lander.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: (a) Sketch of descent of the reentry module, (b) free-body diagram of the module during reentry</figcaption><p></p>
+</figure>
+</div>
+<p>To analyze this process, the first step is to draw the <em>free body diagram</em>, as shown in <a href="#fig-lunar_lander">Figure&nbsp;1</a> (b).</p>
+<p>The module is in contact with the surrounding air, giving rise to the air drag force, <span class="math inline">\(\boldsymbol{F}_D\)</span>, which acts upward when the module is moving downward. This is a type of <em>contact force</em>. In addition, it is affected by a <em>long-range force</em> — the gravitational force from the Earth, <span class="math inline">\(\boldsymbol{G}\)</span>, which acts downward toward the Earth.</p>
+<p>We can now apply Newton’s second law. The net force on the module is <span class="math display">\[
+\boldsymbol{F}_{net} = \boldsymbol{F}_D + \boldsymbol{G} = m \boldsymbol{a}.
+\]</span></p>
+<p>Let us assume the moving is moving along <span class="math inline">\(y\)</span> axis, and we write <span class="math inline">\(\boldsymbol{F}_D = F_D\hat{\boldsymbol{y}}\)</span>, where <span class="math inline">\(\hat{y}\)</span> is a unit vector pointing upward. Then the gravitational force <span class="math inline">\(\boldsymbol{G} = -mg\hat{\boldsymbol{y}}\)</span>, where <span class="math inline">\(m\)</span> is the mass and <span class="math inline">\(g\simeq 9.8 \mathrm{m/s^2}\)</span> is the gravitational accelaration.</p>
+<p>The module is slowing down, so the accelaration <span class="math inline">\(\boldsymbol{a} = a_y \hat{\boldsymbol{y}}\)</span>, with <span class="math inline">\(a_y&gt;0\)</span>.</p>
+<p>Hence, we have <span class="math display">\[
+\boldsymbol{F}_D = F_D\hat{\boldsymbol{y}} = m(a_y + g)\hat{\boldsymbol{y}},
+\]</span> which means <span class="math display">\[
+F_D = m(a_y + g).
+\]</span></p>
+<p>Now, if we can measure the accelaration <span class="math inline">\(a_y(t)\)</span> of the module at different times, then we can extrat the drag force <span class="math inline">\(F_D(t)\)</span> at different times as well. This is done in the following code, where we take some data for <span class="math inline">\(a_y(t)\)</span>.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">'https://raw.githubusercontent.com/pengyangraul/phy_python/main/force_1d_files/reentry.txt'</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>t,a <span class="op">=</span> np.loadtxt(filename,unpack<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> <span class="fl">9.8</span> <span class="co"># m/s^2</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="fl">5000.0</span> <span class="co"># kg</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> m<span class="op">*</span>(a<span class="op">+</span>g)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>plt.plot(t,D)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'$t$/s'</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'$F_D$/N'</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>plt.axhline(y <span class="op">=</span> <span class="fl">1e6</span>,linestyle<span class="op">=</span><span class="st">'--'</span>,color<span class="op">=</span><span class="st">'r'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>&lt;matplotlib.lines.Line2D at 0x2035ffe1cf0&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="force_1d_files/figure-html/cell-2-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>We see the drag force is monotonically decreasing. We can find the time when the air resistance force becomes less than the critical value <span class="math inline">\(F_D^c = 10^6\)</span>N. This is done via <code>t[D&lt;1e6][0]</code>, and you should get <code>5.4246</code>, which is longer than <span class="math inline">\(5\)</span>s. The module will be distroyed!</p>
+</section>
+</section>
+<section id="force-models" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Force Models</h1>
+<p>In order to use Newton’s second law to determine the acceleration of an object, we need to find out how large a force is — we need to determine its magnitude and direction. We call such models “force models”. The force models may be based on direct, experimental measurements. We often call such models phenomenological or experimental force models. The force models can also be based on a more fundamental model or a model based on a microscopic view of the interactions.</p>
+<p>In the following we introduce models for some of the most common types of forces acting between macro- and microscopic objects. These models will be your toolbox for addressing physical processes-you need to continually build on this toolbox, as this will be your reservoir of physical knowledge.</p>
+<p>Examples: - If you want to describe a ball falling through air, you need mathematical expressions for the forces on the ball: both the force due to gravity and the force due to air resistance. - If you want to describe the motion of a nanometer sized particle in water close to a charged surface you need to introduce (probably sophisticated) models for the forces between the particle and the individual water molecules and between the particle and the surface.</p>
+<section id="force-model-gravity" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="force-model-gravity"><span class="header-section-number">2.1</span> Force model: Gravity</h2>
+<section id="newtons-universal-law-of-gravity" class="level3">
+<h3 class="anchored" data-anchor-id="newtons-universal-law-of-gravity">Newton’s universal law of gravity</h3>
+<p><span class="math display">\[
+\boldsymbol{F}_{\mathrm{from\  B\ on\ A}} = \gamma \frac{m M}{r_{AB}^2}\hat{\boldsymbol{r}}_{AB}
+\]</span> Here, we use the notation <span class="math inline">\(\boldsymbol{r}_{AB}\)</span> to denote the vector pointing from the center of object A to the center of object B. Its magnitude we write as <span class="math inline">\(r_{AB} = |\boldsymbol{r}_{AB}|\)</span>. <span class="math inline">\(\hat{\boldsymbol{r}}_{AB}\)</span> is the corresponding unit vector for the direction. <span class="math inline">\(\gamma\)</span> is the gravitational constant. <span class="math inline">\(m\)</span> and <span class="math inline">\(M\)</span> are the masses.</p>
+</section>
+<section id="constant-gravity" class="level3">
+<h3 class="anchored" data-anchor-id="constant-gravity">Constant gravity</h3>
+<p>The general gravitational law becomes simpler for an object near the surface of the Earth or another planet. In this case, the distance <span class="math inline">\(r_{AB}\)</span> from the object to the center of the Earth is approximately constant and equal to the radius <span class="math inline">\(R\)</span> of the Earth. See <a href="#fig-constant_gravity">Figure&nbsp;2</a>.</p>
+<div id="fig-constant_gravity" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./force_1d_files/constant_gravity.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: The gravitational force <span class="math inline">\(\boldsymbol{F}\)</span> from object B on object A</figcaption><p></p>
+</figure>
+</div>
+<p>In this case, we approximate gravitational force <span class="math display">\[
+\boldsymbol{G} = -m\frac{\gamma M}{R^2}\hat{\boldsymbol{r}}
+\]</span> where <span class="math inline">\(\hat{\boldsymbol{r}}\)</span> is the unit direction vector pointing from the earth center to the object. The minus sign indicates that the force is an attraction force. We can then define the gravitation accelaration <span class="math display">\[
+g = \frac{\gamma M}{R^2},
+\]</span> which makes the gravitational force on earth equals <span class="math inline">\(\boldsymbol{G} = -mg\hat{\boldsymbol{r}}\)</span>.</p>
+</section>
+</section>
+<section id="force-model-viscous-force" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="force-model-viscous-force"><span class="header-section-number">2.2</span> Force model: Viscous Force</h2>
+<p>You will often encounter objects that are in contact with a surrounding fluid such as a air or water. We therefore need a force model for the interaction between fluids and solid objects. Unfortunately, there is no fundamental law of nature for such an interaction. Instead, we must determine the force model from experiments or calculations based on an underlying model for fluid flow, and use this result as our model. Fortunately, experiments and calculations show that the force from the fluid has a simple form — it depends on the velocity of the object.</p>
+<section id="drag-force-at-low-velocities" class="level3">
+<h3 class="anchored" data-anchor-id="drag-force-at-low-velocities">Drag Force at Low Velocities</h3>
+<p>If you pull a sphere through water, you expect a contact force FD from the water on the sphere counteracting the motion of the sphere relative to water because water is forced to flow around the sphere. At low velocities, it has been shown experimentally and theoretically that the drag force <span class="math inline">\(\boldsymbol{F}_D\)</span> is proportional to the velocity of the object relative to the fluid, namely <span class="math display">\[
+\boldsymbol{F}_D = - k_v \boldsymbol{v}.
+\]</span> Here, <span class="math inline">\(k_v\)</span> is a proportion constant that depends on the objects size, shape and surface, as well as the <em>viscosity</em> of the fluid.</p>
+<p>For a sphere, Stokes showed that at low velocities that <span class="math inline">\(k_v = 6\pi\eta R\)</span>, where <span class="math inline">\(R\)</span> is the radius of the sphere, and <span class="math inline">\(\eta\)</span> is the viscosity of the fluid. For air, <span class="math inline">\(\eta = 1.82 \times 10^{-5}\mathrm{N\cdot s \cdot m^{-2}}\)</span> (room temperature). If the force is proportional to velocity, we call it a <em>viscous force</em>.</p>
+</section>
+<section id="drag-force-at-high-velocities" class="level3">
+<h3 class="anchored" data-anchor-id="drag-force-at-high-velocities">Drag Force at High Velocities</h3>
+<p>At larger velocities the fluid flow around the object becomes more irregular, see <a href="#fig-viscous_force">Figure&nbsp;3</a>. The drag force is not mainly related to the forces required to drag the fluid along the surface of the object, but instead depends on the under-pressure generated behind the object.</p>
+<div id="fig-viscous_force" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./force_1d_files/viscous_force.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3: Illustration of a drag force on an object due to the motion of the object relative to the surrounding fluid. At low velocities the fluid flow around the object is smooth, and the force is approximately proportional to the velocity. At higher velocities, the fluid flow becomes turbulent near the surface, the flow becomes irregular, and the force is approximately proportional to the square of the velocity</figcaption><p></p>
+</figure>
+</div>
+<p>In this case, the force is proportional to the square of the velocity, and we call this law the square law of air resistance <span class="math display">\[
+\boldsymbol{F}_D = -Dv^2 \hat{\boldsymbol{v}}.
+\]</span> Here <span class="math inline">\(D\)</span> is another constant and for spherical object experiments have shown that <span class="math inline">\(D \simeq 12.0 \rho R^2\)</span>, where <span class="math inline">\(\rho\)</span> is the density of the fluid.</p>
+</section>
+<section id="general-model-for-fluid-drag" class="level3">
+<h3 class="anchored" data-anchor-id="general-model-for-fluid-drag">General Model for Fluid Drag</h3>
+<p>The behaviors for low and high velocities are special cases of a more general model for the drag force. Experiments show that the drag force can be written in the general form: <span class="math display">\[
+F_D  = \frac{1}{2} \rho S C_D(v, \eta, \rho, d)v^2.
+\]</span> - <span class="math inline">\(\rho\)</span> is the density of the fluid. - <span class="math inline">\(S\)</span> is the cross-sectional area of the object, which is <span class="math inline">\(S = \pi R^2\)</span> for spherical objects. - <span class="math inline">\(v\)</span> is the speed of the object relative to the fluid. - <span class="math inline">\(\eta\)</span> is the viscosity of the fluid. - <span class="math inline">\(d\)</span> is the characteristic length scale, such as the diameter of the sphere. - The coefficient <span class="math inline">\(C_D(\dots)\)</span> is called the <em>drag coefficient</em>.</p>
+<p>Remarkably, experiments showed that the drag coefficient only depends on one number, <span class="math inline">\(Re\)</span>, called the <em>Reynold’s number</em>, <span class="math display">\[
+C_D(v,\eta,\rho,d) = C_D(Re), \quad Re = \frac{\rho d}{\eta} v.
+\]</span></p>
+<p>This is a surprisingly compact description with many interesting implications. For example, if you increase the velocity by a factor 10 you get the same drag coefficient if you either reduce the radius by a factor 10 or increase the viscosity by a factor 10.</p>
+<p>At low velocities, we expect to recover Stokes’ general result: <span class="math inline">\(F_D = 6\pi \eta R v\)</span>, which implies <span class="math inline">\(C_D(Re) \propto Re^{-1}\)</span>. This is shown in <strong>?@fig-drag-coefficient</strong>, where <span class="math inline">\(Re^{-1}\)</span> is shown as a straight line.</p>
+<p><img src="./force_1d_files/drag_coefficient.png" id="fig-drag-coefficient" class="img-fluid" alt="The drag coefficient CD as a function of Reynold’s number, Re=\rho d v/\eta based on experimental data.">.</p>
+<p>At large velocities, we see that the <span class="math inline">\(C_D\)</span> is approximately a constant, and the force is proportional to velocity square.</p>
+<p>Something strange happens when the Reynold’s number reaches <span class="math inline">\(Re=3.2\times 10^5\)</span>. The drag coefficient drops significantly. This effect is due to <em>boundary-layer turbulence</em>, which we will not explain. The transition point where this effect kicks in depends on surface properties of the object. For a rough surface, such as that of a golf ball, the transition occurs for a lower Reynold’s number than for a smooth ball. This is the reason why golf balls have a rough surface: The air drag force for large velocities is reduced by this design.</p>
+<p>What happened to aerodynamic design? This is also hidden in the drag coefficient. The value of the drag coefficient depends on the shape of the object, and more aerodynamic designs have lower drag coefficients for approximately the same crosssectional area, as illustrated in <a href="#fig-aerodynamics">Figure&nbsp;4</a>.</p>
+<div id="fig-aerodynamics" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./force_1d_files/aerodynamics.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;4: The drag coefficient CD at the same velocity for object with the same crosssectional area, but with different shapes</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="example-falling-raindrop" class="level3">
+<h3 class="anchored" data-anchor-id="example-falling-raindrop">Example: Falling Raindrop</h3>
+<p>This example demonstrates how we can find the motion of an object subject to a constant force (gravity), and to a velocity-dependent force.</p>
+<section id="model" class="level4">
+<h4 class="anchored" data-anchor-id="model">Model</h4>
+<p>Raindrops are often as small as <span class="math inline">\(d=1\)</span> mm in diameter as they start falling. We first draw the free-body diagram, in <a href="#fig-raindrop">Figure&nbsp;5</a>.</p>
+<div id="fig-raindrop" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./force_1d_files/raindrop.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5: Left Illustration of a raindrop falling down. Right Free-body diagram for the drop. (Notice that a real raindrop is neither perfectly spherical nor “drop-shaped”, it is pushed flat by the air resistance force)</figcaption><p></p>
+</figure>
+</div>
+<p>We can simply choosing downward as the positive direction, and we can write the drag force magnitude <span class="math display">\[
+F_D = k_v v(t),
+\]</span> where <span class="math inline">\(v(t)\)</span> is the magnitude of the velocity at time <span class="math inline">\(t\)</span>.</p>
+<p>We apply Newton’s second law <span class="math display">\[
+mg - k_v v(t) = ma.
+\]</span></p>
+</section>
+<section id="no-drag-limit" class="level4">
+<h4 class="anchored" data-anchor-id="no-drag-limit">No drag limit</h4>
+<p>When there is no drag, we have <span class="math inline">\(a = g\)</span>, which means the raindrop is free-falling.</p>
+</section>
+<section id="simplified-model-constant-velocity" class="level4">
+<h4 class="anchored" data-anchor-id="simplified-model-constant-velocity">Simplified model: Constant velocity</h4>
+<p>What will happen as the drop starts to fall? It starts from zero velocity, so initially the accelaration is <span class="math inline">\(a = g\)</span>. As the drop falls, the velocity is increasing (in magnitude), and the accelaration <span class="math inline">\(a = g - (k_v/m)v\)</span> will decrease in magnitude, and therefore approach zero.</p>
+<p>When the acceleration becomes zero, the velocity will no longer change. The drop will have reached a stationary velocity — a velocity that does not change with time. We call this velocity the terminal velocity <span class="math inline">\(v_T= mg/k_v\)</span>. We therefore expect the drop to approach the velocity <span class="math inline">\(v = -v_T\)</span> as time increases.</p>
+</section>
+<section id="full-model-with-numerical-solution" class="level4">
+<h4 class="anchored" data-anchor-id="full-model-with-numerical-solution">Full model with numerical solution</h4>
+<p>Since we know the initial condition <span class="math inline">\(a = g\)</span> and the so-called <em>asymptotic behavior</em>: <span class="math inline">\(a \to 0 \mathrm{m/s^2}\)</span> and <span class="math inline">\(v \to v_T\)</span>. We can update the velocity according to the following rules: <span class="math display">\[
+v(t_i + \Delta) = v(t_i) +  \Delta t \cdot a(t_i, v(t_i)),
+\]</span> where we have discretized the continuous time to <span class="math inline">\(t_0, t_1, t_2, \cdots\)</span>, and <span class="math inline">\(t_i = i\Delta t\)</span>, with discretization step <span class="math inline">\(\Delta t\)</span>. The accelaration at time <span class="math inline">\(t_i\)</span> can be computed as <span class="math display">\[
+a(t_i, v(t_i)) = g - (k_v/m)v(t_i).
+\]</span> This can be implemented with the following code. For the parameter, we take the radius of the drop <span class="math inline">\(r = 0.5\mathrm{mm}\)</span>, then the mass can be computed according to <span class="math display">\[
+m = \rho V = \rho \frac{4\pi}{3}r^3.
+\]</span> The coefficient <span class="math inline">\(k_v\)</span> can be obtained from Stokes’ formula, <span class="math display">\[
+k_v = 6\pi r \eta,
+\]</span> with the viscosity of the air <span class="math inline">\(\eta = 1.82 \times 10^{-5}\mathrm{N s m^{-2}}\)</span></p>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> <span class="fl">9.8</span> <span class="co"># m/s^2</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> <span class="fl">0.5e-3</span> <span class="co"># m</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>rho <span class="op">=</span> <span class="fl">1.0e3</span> <span class="co"># kg/m^3</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> rho <span class="op">*</span> <span class="dv">4</span><span class="op">*</span>np.pi<span class="op">/</span><span class="dv">3</span><span class="op">*</span>r<span class="op">**</span><span class="dv">3</span> <span class="co"># kg</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>eta <span class="op">=</span> <span class="fl">1.82e-5</span> <span class="co"># Nsm^-2</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>kv <span class="op">=</span> <span class="dv">6</span><span class="op">*</span>np.pi<span class="op">*</span>r<span class="op">*</span>eta <span class="co"># Nsm^-1</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Terminal velocity</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>vT <span class="op">=</span> m<span class="op">*</span>g<span class="op">/</span>kv</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># initial condition </span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>steps <span class="op">=</span> <span class="dv">500</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>vlist <span class="op">=</span> np.zeros(steps)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>alist <span class="op">=</span> np.zeros(steps<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>tlist <span class="op">=</span> np.arange(steps)<span class="op">*</span>dt</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> jj <span class="kw">in</span> <span class="bu">range</span>(steps<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    alist[jj] <span class="op">=</span> g <span class="op">-</span> (kv<span class="op">/</span>m)<span class="op">*</span>vlist[jj]</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    vlist[jj<span class="op">+</span><span class="dv">1</span>] <span class="op">=</span> vlist[jj] <span class="op">+</span> alist[jj]<span class="op">*</span>dt</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Create two subplots, in 1 row, with 2 columns</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>fig,ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>plt.subplots_adjust(left<span class="op">=</span><span class="fl">0.125</span>, bottom<span class="op">=</span><span class="fl">0.1</span>, right<span class="op">=</span><span class="fl">0.9</span>, top<span class="op">=</span><span class="fl">0.9</span>, wspace<span class="op">=</span><span class="fl">0.35</span>, hspace<span class="op">=</span><span class="fl">0.25</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co"># first subplot</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].set_title(<span class="st">'velocity vs time'</span>)</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].plot(tlist,vlist,<span class="st">'k-'</span>, label<span class="op">=</span><span class="st">'$v(t)$'</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].axhline(y <span class="op">=</span> vT, linestyle<span class="op">=</span><span class="st">'--'</span>,color <span class="op">=</span> <span class="st">'blue'</span>,label<span class="op">=</span><span class="st">'$v_T$'</span>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].set_xlabel(<span class="st">'t [s]'</span>)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">'v [m/s]'</span>)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].legend()</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="co"># second subplot</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].set_title(<span class="st">'acceleration vs time'</span>)</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].plot(tlist[:<span class="op">-</span><span class="dv">1</span>],alist,<span class="st">'k-'</span>, label<span class="op">=</span><span class="st">'$a(t)$'</span>)</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].set_xlabel(<span class="st">'t [s]'</span>)</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].set_ylabel(<span class="st">'a [$m/s^2$]'</span>)</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].axhline(y <span class="op">=</span><span class="dv">0</span> , linestyle<span class="op">=</span><span class="st">'--'</span>,color <span class="op">=</span> <span class="st">'blue'</span>,label<span class="op">=</span><span class="st">'$a=0 m/s^2$'</span>)</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].legend()</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="force_1d_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="force-model-spring-force" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="force-model-spring-force"><span class="header-section-number">2.3</span> Force Model: Spring Force</h2>
 </section>
 </section>
 
@@ -156,7 +450,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);

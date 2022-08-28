@@ -128,8 +128,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#general-model-for-fluid-drag" id="toc-general-model-for-fluid-drag" class="nav-link" data-scroll-target="#general-model-for-fluid-drag">General Model for Fluid Drag</a></li>
   <li><a href="#example-falling-raindrop" id="toc-example-falling-raindrop" class="nav-link" data-scroll-target="#example-falling-raindrop">Example: Falling Raindrop</a></li>
   </ul></li>
-  <li><a href="#force-model-spring-force" id="toc-force-model-spring-force" class="nav-link" data-scroll-target="#force-model-spring-force"><span class="toc-section-number">2.3</span>  Force Model: Spring Force</a></li>
+  <li><a href="#force-model-spring-force" id="toc-force-model-spring-force" class="nav-link" data-scroll-target="#force-model-spring-force"><span class="toc-section-number">2.3</span>  Force Model: Spring Force</a>
+  <ul class="collapse">
+  <li><a href="#spring-force" id="toc-spring-force" class="nav-link" data-scroll-target="#spring-force">Spring Force</a></li>
+  <li><a href="#example-motion-of-a-hanging-block" id="toc-example-motion-of-a-hanging-block" class="nav-link" data-scroll-target="#example-motion-of-a-hanging-block">Example: Motion of a Hanging Block</a></li>
   </ul></li>
+  </ul></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="toc-section-number">3</span>  Homework</a></li>
   </ul>
 </nav>
 </div>
@@ -376,7 +381,129 @@ k_v = 6\pi r \eta,
 </section>
 <section id="force-model-spring-force" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="force-model-spring-force"><span class="header-section-number">2.3</span> Force Model: Spring Force</h2>
+<p>The contact forces between two solid objects come from the deformation of the objects.</p>
+<section id="spring-force" class="level3">
+<h3 class="anchored" data-anchor-id="spring-force">Spring Force</h3>
+<p>The force <span class="math inline">\(F\)</span> (magnitude) required to extend an object by <span class="math inline">\(\Delta L\)</span> is the <em>spring force</em> <span class="math display">\[
+F = k\Delta L.
+\]</span> The direction of the spring force is opposite to extending direction.</p>
+<p>Similarly, when compressing the object by <span class="math inline">\(\Delta L\)</span>, the magnitude of the force is the same, with an opposite direction.</p>
 </section>
+<section id="example-motion-of-a-hanging-block" class="level3">
+<h3 class="anchored" data-anchor-id="example-motion-of-a-hanging-block">Example: Motion of a Hanging Block</h3>
+<p>A block of mass <span class="math inline">\(m = 1\)</span> kg is hanging from a spring with spring constant <span class="math inline">\(k=100\)</span> N/m. The other end of the spring is attached to the ceiling, as shown in <strong>?@fig-spring_block</strong>. Initially, we put the block at the equilibrium position of the spring. We want to simulate the motion of the block after it is released.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./force_1d_files/spring_block.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Sketch of a block hanging in a spring (left), and the free-body diagram of the system (right)</figcaption><p></p>
+</figure>
+</div>
+<p>Still, we choose the down direction as the positive direction. The net force on the block is <span class="math display">\[
+F_{net}=mg + F_D + F_{s},
+\]</span> where <span class="math inline">\(F_D\)</span> is the air drag force and <span class="math inline">\(F_s\)</span> is the spring force.</p>
+<section id="spring-force-1" class="level4">
+<h4 class="anchored" data-anchor-id="spring-force-1">Spring force</h4>
+<p>Let us assume the equilibrium position of the spring at <span class="math inline">\(y = 0\)</span>. Then we can write <span class="math display">\[
+F_s = - ky.
+\]</span></p>
+</section>
+<section id="air-drag" class="level4">
+<h4 class="anchored" data-anchor-id="air-drag">Air drag</h4>
+<p>Here we consider a more advanced model for the air drag. - At large velocities the air resistance force is described by a quadratic law with drag coefficient <span class="math inline">\(D = 2.5\mathrm{m}^{-1}\)</span>. - At low velocites it is described by a viscous drag force with coefficient <span class="math inline">\(k_v\)</span>. - We assume the transition occurs at <span class="math inline">\(v_t = 0.2\mathrm{m/s}\)</span>: <span class="math display">\[
+    F_D(v) =
+    \begin{cases}
+        -D v(t)|v(t)|, &amp; v&gt; v_t \\
+        -k_v v(t), &amp; v &lt; v_t.
+    \end{cases}
+    \]</span></p>
+<p>A continuous force requires the two behaviors to be the same at <span class="math inline">\(v=v_t\)</span>, that is <span class="math display">\[
+-D v_t^2  = -k_v v_t, \quad \Rightarrow k_v = Dv_t.
+\]</span></p>
+</section>
+<section id="numerical-solution" class="level4">
+<h4 class="anchored" data-anchor-id="numerical-solution">Numerical solution</h4>
+<p>We can apply the Newton’s second Law: <span class="math display">\[
+mg - ky(t) + F_D(v(t)) = ma(t).
+\]</span></p>
+<p>We can use the folllowing equations: <span class="math display">\[
+a(t_i) = g - \frac{ky(t_i)}{m} + \frac{F_D(v(t_i))}{m}
+\]</span> and <span class="math display">\[
+v(t_i + \Delta t) = v(t_i) + a(t_i)\Delta t.
+\]</span></p>
+<p>The initial condition is <span class="math inline">\(v(0) = 0\mathrm{m/s}\)</span>, and <span class="math inline">\(a(0) = g\)</span>. The above algorithm is implemented in the following.</p>
+<div class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> F_D(v):</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    D <span class="op">=</span> <span class="fl">2.5</span> <span class="co"># m^-1</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    vt <span class="op">=</span> <span class="fl">0.2</span> <span class="co"># m/s</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    kv <span class="op">=</span> D<span class="op">*</span>vt</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> v<span class="op">&lt;</span>vt:</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        FD <span class="op">=</span> <span class="op">-</span>kv<span class="op">*</span>v</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        FD <span class="op">=</span> <span class="op">-</span>D<span class="op">*</span>v<span class="op">*</span>np.<span class="bu">abs</span>(v)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> FD</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># parameters</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="fl">100.0</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> <span class="fl">15.0</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> <span class="fl">9.8</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co"># numerical steps</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> <span class="fl">0.00001</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>steps <span class="op">=</span> <span class="dv">1500000</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>ylist <span class="op">=</span> np.zeros(steps)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>vlist <span class="op">=</span> np.zeros(steps)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>ylist_no_air <span class="op">=</span> np.zeros(steps)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>vlist_no_air <span class="op">=</span> np.zeros(steps)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># alist = np.zeros(steps-1)</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>tlist <span class="op">=</span> np.arange(steps)<span class="op">*</span>dt</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> jj <span class="kw">in</span> <span class="bu">range</span>(steps<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> g <span class="op">-</span> (k<span class="op">*</span>ylist[jj])<span class="op">/</span>m <span class="op">+</span> F_D(vlist[jj])<span class="op">/</span>m</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    vlist[jj<span class="op">+</span><span class="dv">1</span>] <span class="op">=</span> vlist[jj] <span class="op">+</span> a<span class="op">*</span>dt</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    ylist[jj<span class="op">+</span><span class="dv">1</span>] <span class="op">=</span> ylist[jj] <span class="op">+</span> vlist[jj]<span class="op">*</span>dt</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Neglecting air drag</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> jj <span class="kw">in</span> <span class="bu">range</span>(steps<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> g <span class="op">-</span> (k<span class="op">*</span>ylist_no_air[jj])<span class="op">/</span>m</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    vlist_no_air[jj<span class="op">+</span><span class="dv">1</span>] <span class="op">=</span> vlist_no_air[jj] <span class="op">+</span> a<span class="op">*</span>dt</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    ylist_no_air[jj<span class="op">+</span><span class="dv">1</span>] <span class="op">=</span> ylist_no_air[jj] <span class="op">+</span> vlist_no_air[jj]<span class="op">*</span>dt</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Create two subplots, in 1 row, with 2 columns</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>fig,ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>,<span class="dv">1</span>)</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>plt.subplots_adjust(left<span class="op">=</span><span class="fl">0.125</span>, bottom<span class="op">=</span><span class="fl">0.1</span>, right<span class="op">=</span><span class="fl">0.9</span>, top<span class="op">=</span><span class="fl">0.9</span>, wspace<span class="op">=</span><span class="fl">0.35</span>, hspace<span class="op">=</span><span class="fl">0.55</span>)</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="co"># first subplot</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].set_title(<span class="st">'position vs time'</span>)</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].plot(tlist,ylist,<span class="st">'k-'</span>, label<span class="op">=</span><span class="st">'with air drag'</span>)</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].plot(tlist,ylist_no_air,<span class="st">'r--'</span>, label<span class="op">=</span><span class="st">'no air drag'</span>)</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].set_xlabel(<span class="st">'t [s]'</span>)</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">'y [m]'</span>)</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].legend()</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="co"># second subplot</span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].set_title(<span class="st">'velocity vs time'</span>)</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].plot(tlist,vlist,<span class="st">'k-'</span>, label<span class="op">=</span><span class="st">'with air drag'</span>)</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].plot(tlist,vlist_no_air,<span class="st">'r--'</span>, label<span class="op">=</span><span class="st">'no air drag'</span>)</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].set_xlabel(<span class="st">'t [s]'</span>)</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].set_ylabel(<span class="st">'v [$m/s$]'</span>)</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].legend()</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="force_1d_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section id="homework" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Homework</h1>
+<p>A person jumps from an airplane, falling freely for several seconds before he pulls the cord of his parachute and the parachute unfolds. 1. Identify the forces acting on the parachuter and draw a free-body diagram of the parachuter before he has pulled the chord. 1. Identify the forces acting on the parachuter and draw a free-body diagram of the parachuter after he has pulled the chord. 1. Sketch the net force acting on the parachuter as a function of time, <span class="math inline">\(F(t)\)</span>. 1. Write a program with initial conditions as input parameters (the waiting time before parachute unfold, the height from the jumping point)</p>
 </section>
 
 </main>

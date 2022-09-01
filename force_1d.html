@@ -160,15 +160,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1 data-number="1"><span class="header-section-number">1</span> Newton’s second law</h1>
 <p>The relation between force <span class="math inline">\(\boldsymbol{F}\)</span> and accelaration <span class="math inline">\(\boldsymbol{a}\)</span> is <span class="math display">\[
 \boldsymbol{F} = m \boldsymbol{a}.
-\]</span> - Here, <span class="math inline">\(\boldsymbol{F}\)</span> and <span class="math inline">\(\boldsymbol{a}\)</span> are vectors, with magnitudes and directions. - <span class="math inline">\(\boldsymbol{F} = \boldsymbol{F}_{net}\)</span> is the net (total) force on the object, namely <span class="math display">\[
-  \boldsymbol{F}_{net} = \sum_j \boldsymbol{F}_j.
-  \]</span></p>
+\]</span></p>
+<ul>
+<li><p>Here, <span class="math inline">\(\boldsymbol{F}\)</span> and <span class="math inline">\(\boldsymbol{a}\)</span> are vectors, with magnitudes and directions.</p></li>
+<li><p><span class="math inline">\(\boldsymbol{F} = \boldsymbol{F}_{net}\)</span> is the net (total) force on the object, namely <span class="math display">\[
+\boldsymbol{F}_{net} = \sum_j \boldsymbol{F}_j.
+\]</span></p></li>
+</ul>
 <section id="more-on-vectors" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="more-on-vectors"><span class="header-section-number">1.1</span> More on vectors</h2>
 <ul>
 <li>In 1D, the directions are either left or right. One can use <em>positive</em> or <em>negative</em> sign to indicate the direction.</li>
 <li>Namely, we can introduce a <em>unit vector</em> <span class="math inline">\(\hat{\boldsymbol{x}}\)</span>, which is of magnitude 1 and with direction to the right.</li>
-<li>Any other vectors can be written as <span class="math inline">\(\boldsymbol{x} = x \hat{\boldsymbol{x}}\)</span>, where <span class="math inline">\(x&gt;0\)</span> means the vector is pointing to the right. Note that the magnitude of the vector will be <span class="math inline">\(|x|\)</span>.</li>
+<li>Any other vectors can be written as <span class="math inline">\(\boldsymbol{x} = x \hat{\boldsymbol{x}}\)</span>, where <span class="math inline">\(x&gt;0\)</span> means the vector is pointing to the right. Note that the magnitude of the vector will be <span class="math inline">\(|\boldsymbol{x}|\)</span>.</li>
 </ul>
 </section>
 <section id="acceleration-and-forces-on-a-lunar-lander" class="level2" data-number="1.2">
@@ -277,15 +281,20 @@ F_D  = \frac{1}{2} \rho S C_D(v, \eta, \rho, d)v^2.
 C_D(v,\eta,\rho,d) = C_D(Re), \quad Re = \frac{\rho d}{\eta} v.
 \]</span></p>
 <p>This is a surprisingly compact description with many interesting implications. For example, if you increase the velocity by a factor 10 you get the same drag coefficient if you either reduce the radius by a factor 10 or increase the viscosity by a factor 10.</p>
-<p>At low velocities, we expect to recover Stokes’ general result: <span class="math inline">\(F_D = 6\pi \eta R v\)</span>, which implies <span class="math inline">\(C_D(Re) \propto Re^{-1}\)</span>. This is shown in <strong>?@fig-drag-coefficient</strong>, where <span class="math inline">\(Re^{-1}\)</span> is shown as a straight line.</p>
-<p><img src="./force_1d_files/drag_coefficient.png" id="fig-drag-coefficient" class="img-fluid" alt="The drag coefficient CD as a function of Reynold’s number, Re=\rho d v/\eta based on experimental data.">.</p>
+<p>At low velocities, we expect to recover Stokes’ general result: <span class="math inline">\(F_D = 6\pi \eta R v\)</span>, which implies <span class="math inline">\(C_D(Re) \propto Re^{-1}\)</span>. This is shown in <a href="#fig-drag-coefficient">Figure&nbsp;4</a>, where <span class="math inline">\(Re^{-1}\)</span> is shown as a straight line.</p>
+<div id="fig-drag-coefficient" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./force_1d_files/drag_coefficient.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;4: The drag coefficient CD as a function of Reynold’s number, <span class="math inline">\(Re=\rho d v/\eta\)</span> based on experimental data.</figcaption><p></p>
+</figure>
+</div>
 <p>At large velocities, we see that the <span class="math inline">\(C_D\)</span> is approximately a constant, and the force is proportional to velocity square.</p>
 <p>Something strange happens when the Reynold’s number reaches <span class="math inline">\(Re=3.2\times 10^5\)</span>. The drag coefficient drops significantly. This effect is due to <em>boundary-layer turbulence</em>, which we will not explain. The transition point where this effect kicks in depends on surface properties of the object. For a rough surface, such as that of a golf ball, the transition occurs for a lower Reynold’s number than for a smooth ball. This is the reason why golf balls have a rough surface: The air drag force for large velocities is reduced by this design.</p>
-<p>What happened to aerodynamic design? This is also hidden in the drag coefficient. The value of the drag coefficient depends on the shape of the object, and more aerodynamic designs have lower drag coefficients for approximately the same crosssectional area, as illustrated in <a href="#fig-aerodynamics">Figure&nbsp;4</a>.</p>
+<p>What happened to aerodynamic design? This is also hidden in the drag coefficient. The value of the drag coefficient depends on the shape of the object, and more aerodynamic designs have lower drag coefficients for approximately the same crosssectional area, as illustrated in <a href="#fig-aerodynamics">Figure&nbsp;5</a>.</p>
 <div id="fig-aerodynamics" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="./force_1d_files/aerodynamics.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;4: The drag coefficient CD at the same velocity for object with the same crosssectional area, but with different shapes</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5: The drag coefficient CD at the same velocity for object with the same crosssectional area, but with different shapes</figcaption><p></p>
 </figure>
 </div>
 </section>
@@ -294,11 +303,11 @@ C_D(v,\eta,\rho,d) = C_D(Re), \quad Re = \frac{\rho d}{\eta} v.
 <p>This example demonstrates how we can find the motion of an object subject to a constant force (gravity), and to a velocity-dependent force.</p>
 <section id="model" class="level4">
 <h4 class="anchored" data-anchor-id="model">Model</h4>
-<p>Raindrops are often as small as <span class="math inline">\(d=1\)</span> mm in diameter as they start falling. We first draw the free-body diagram, in <a href="#fig-raindrop">Figure&nbsp;5</a>.</p>
+<p>Raindrops are often as small as <span class="math inline">\(d=1\)</span> mm in diameter as they start falling. We first draw the free-body diagram, in <a href="#fig-raindrop">Figure&nbsp;6</a>.</p>
 <div id="fig-raindrop" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="./force_1d_files/raindrop.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;5: Left Illustration of a raindrop falling down. Right Free-body diagram for the drop. (Notice that a real raindrop is neither perfectly spherical nor “drop-shaped”, it is pushed flat by the air resistance force)</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;6: Left Illustration of a raindrop falling down. Right Free-body diagram for the drop. (Notice that a real raindrop is neither perfectly spherical nor “drop-shaped”, it is pushed flat by the air resistance force)</figcaption><p></p>
 </figure>
 </div>
 <p>We can simply choosing downward as the positive direction, and we can write the drag force magnitude <span class="math display">\[
@@ -391,11 +400,11 @@ F = k\Delta L.
 </section>
 <section id="example-motion-of-a-hanging-block" class="level3">
 <h3 class="anchored" data-anchor-id="example-motion-of-a-hanging-block">Example: Motion of a Hanging Block</h3>
-<p>A block of mass <span class="math inline">\(m = 1\)</span> kg is hanging from a spring with spring constant <span class="math inline">\(k=100\)</span> N/m. The other end of the spring is attached to the ceiling, as shown in <strong>?@fig-spring_block</strong>. Initially, we put the block at the equilibrium position of the spring. We want to simulate the motion of the block after it is released.</p>
-<div class="quarto-figure quarto-figure-center">
+<p>A block of mass <span class="math inline">\(m = 1\)</span> kg is hanging from a spring with spring constant <span class="math inline">\(k=100\)</span> N/m. The other end of the spring is attached to the ceiling, as shown in <a href="#fig-spring_block">Figure&nbsp;7</a>. Initially, we put the block at the equilibrium position of the spring. We want to simulate the motion of the block after it is released.</p>
+<div id="fig-spring_block" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="./force_1d_files/spring_block.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Sketch of a block hanging in a spring (left), and the free-body diagram of the system (right)</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;7: Sketch of a block hanging in a spring (left), and the free-body diagram of the system (right)</figcaption><p></p>
 </figure>
 </div>
 <p>Still, we choose the down direction as the positive direction. The net force on the block is <span class="math display">\[

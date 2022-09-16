@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.145">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -276,7 +276,15 @@ g = \frac{\gamma M}{R^2},
 <h3 class="anchored" data-anchor-id="general-model-for-fluid-drag">General Model for Fluid Drag</h3>
 <p>The behaviors for low and high velocities are special cases of a more general model for the drag force. Experiments show that the drag force can be written in the general form: <span class="math display">\[
 F_D  = \frac{1}{2} \rho S C_D(v, \eta, \rho, d)v^2.
-\]</span> - <span class="math inline">\(\rho\)</span> is the density of the fluid. - <span class="math inline">\(S\)</span> is the cross-sectional area of the object, which is <span class="math inline">\(S = \pi R^2\)</span> for spherical objects. - <span class="math inline">\(v\)</span> is the speed of the object relative to the fluid. - <span class="math inline">\(\eta\)</span> is the viscosity of the fluid. - <span class="math inline">\(d\)</span> is the characteristic length scale, such as the diameter of the sphere. - The coefficient <span class="math inline">\(C_D(\dots)\)</span> is called the <em>drag coefficient</em>.</p>
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\rho\)</span> is the density of the fluid.</li>
+<li><span class="math inline">\(S\)</span> is the cross-sectional area of the object, which is <span class="math inline">\(S = \pi R^2\)</span> for spherical objects.</li>
+<li><span class="math inline">\(v\)</span> is the speed of the object relative to the fluid.</li>
+<li><span class="math inline">\(\eta\)</span> is the viscosity of the fluid.</li>
+<li><span class="math inline">\(d\)</span> is the characteristic length scale, such as the diameter of the sphere.</li>
+<li>The coefficient <span class="math inline">\(C_D(\dots)\)</span> is called the <em>drag coefficient</em>.</li>
+</ul>
 <p>Remarkably, experiments showed that the drag coefficient only depends on one number, <span class="math inline">\(Re\)</span>, called the <em>Reynold’s number</em>, <span class="math display">\[
 C_D(v,\eta,\rho,d) = C_D(Re), \quad Re = \frac{\rho d}{\eta} v.
 \]</span></p>
@@ -329,7 +337,7 @@ mg - k_v v(t) = ma.
 <section id="full-model-with-numerical-solution" class="level4">
 <h4 class="anchored" data-anchor-id="full-model-with-numerical-solution">Full model with numerical solution</h4>
 <p>Since we know the initial condition <span class="math inline">\(a = g\)</span> and the so-called <em>asymptotic behavior</em>: <span class="math inline">\(a \to 0 \mathrm{m/s^2}\)</span> and <span class="math inline">\(v \to v_T\)</span>. We can update the velocity according to the following rules: <span class="math display">\[
-v(t_i + \Delta) = v(t_i) +  \Delta t \cdot a(t_i, v(t_i)),
+v(t_i + \Delta t) = v(t_i) +  \Delta t \cdot a(t_i, v(t_i)),
 \]</span> where we have discretized the continuous time to <span class="math inline">\(t_0, t_1, t_2, \cdots\)</span>, and <span class="math inline">\(t_i = i\Delta t\)</span>, with discretization step <span class="math inline">\(\Delta t\)</span>. The accelaration at time <span class="math inline">\(t_i\)</span> can be computed as <span class="math display">\[
 a(t_i, v(t_i)) = g - (k_v/m)v(t_i).
 \]</span> This can be implemented with the following code. For the parameter, we take the radius of the drop <span class="math inline">\(r = 0.5\mathrm{mm}\)</span>, then the mass can be computed according to <span class="math display">\[

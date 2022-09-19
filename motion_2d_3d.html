@@ -687,6 +687,138 @@ x(t) = (0.2\mathrm{m})\sin\left((2.1 \mathrm{rad/s})t\right)
 <p></p><figcaption class="figure-caption">Figure&nbsp;4: The trajectory of the Mars Express spacecraft illustrated as a motion diagram and the Mars Express spacecraft.</figcaption><p></p>
 </figure>
 </div>
+<p><strong>Reading and converting the data:</strong> The path of the Mars Express from Earth to Mars is approximately given by the data set <a href="http://folk.uio.no/malthe/mechbook/marsexpresslr.d">marsexpresslr.d</a>, which has been reduced to be strictly two-dimensional. Each line in the data set contains the following information: <span class="math display">
+\begin{matrix}
+t_1 &amp; x_1 &amp; y_1 &amp; z_1 \\
+t_2 &amp; x_2 &amp; y_2 &amp; z_2 \\
+\cdots &amp; \cdots &amp; \cdots &amp; \cdots
+\end{matrix}
+</span></p>
+<p>The time is given in days, and the spatial coordinates are measured in kilometers. We read the data set into Python to examine the motion, using <code>np.loadtxt</code>:</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that I have downloaded the file to the following directory. </span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>t,x,y<span class="op">=</span>np.loadtxt(<span class="st">'./motion_2d_3d_files/marsexpresslr.d'</span>,usecols<span class="op">=</span>[<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>],unpack<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(t)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> t[<span class="dv">1</span>] <span class="op">-</span> t[<span class="dv">0</span>]</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> np.zeros((n,<span class="dv">2</span>),<span class="bu">float</span>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>r[:,<span class="dv">0</span>] <span class="op">=</span> x</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>r[:,<span class="dv">1</span>] <span class="op">=</span> y</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>AU <span class="op">=</span> <span class="fl">149598000.0</span> <span class="co"># km/AU</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> r<span class="op">/</span>AU <span class="co"># AU</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We would like to measure lengths in Astronomical Units, where <span class="math inline">1\mathrm{AU} = 149,598,000 \mathrm{km}</span>. An astronomical unit (1 AU) roughly corresponds to the average radius of the orbit of the Earth around the Sun — it is therefore a useful unit for describing planetary motion. We converted the length in unit of AU, in the above code.</p>
+<p><strong>Plotting the trajectory — Low resolution data:</strong> The data-set provides the positions <span class="math inline">\boldsymbol{r}_i</span> at times <span class="math inline">t_i</span>. We can visualize the trajectory by plotting all the positions of the module:</p>
+<p><strong>Motion diagram:</strong> The plot of the trajectory itself does not provide much insight into the motion of the module. We can gain more insight through a motion diagram or by calculating the velocity and acceleration of the module along the trajectory. Since the data is so coarse, we start by illustrating the velocities and the accelerations in the diagrams.</p>
+<p>The average velocity is proportional to the displacement: <span class="math display">
+\overline{\boldsymbol{v}}_i = \frac{\Delta \boldsymbol{r}_i}{\Delta t} = \frac{1}{\Delta t}(\boldsymbol{r}_{i+1} - \boldsymbol{r}_i).
+</span></p>
+<p>We can therefore illustrate the velocities by drawing the displacement vectors from <span class="math inline">\boldsymbol{r}_i</span> to <span class="math inline">\boldsymbol{r}_{i+1}</span>.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>plt.plot(r[:,<span class="dv">0</span>],r[:,<span class="dv">1</span>])</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'equal'</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x [au]'</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'y [au]'</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="motion_2d_3d_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>We have used <code>axis('equal')</code> to ensure that the scaling of the <span class="math inline">x</span>- and <span class="math inline">y</span>-axis are the same, so that a circle will appear as a circle and not as an ellipse. Notice that <code>r[:,0]</code> gives the <span class="math inline">x_i</span> for all <span class="math inline">i</span>, and similarly <code>r[:,1]</code> for the <span class="math inline">y_i</span>.</p>
+<p>This is done by draw an arrow from <code>r[i,:]</code> to <code>r[i+1,:]</code>, using <code>plt.quiver()</code>, which draws an arrow from a point <span class="math inline">\boldsymbol{r}_i</span> and in a distance <span class="math inline">\Delta \boldsymbol{r}_i</span>. Notice the additional arguments provided to the quiver command to ensure that the arrows have correct length and orientation. Also remember to replot the previous figure and to add show() at the end of the script.</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    plt.plot(r[i,<span class="dv">0</span>],r[i,<span class="dv">1</span>],<span class="st">'ko'</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    dr <span class="op">=</span> r[i<span class="op">+</span><span class="dv">1</span>,:] <span class="op">-</span> r[i,:]</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    plt.quiver(r[i,<span class="dv">0</span>],r[i,<span class="dv">1</span>],dr[<span class="dv">0</span>],dr[<span class="dv">1</span>],angles<span class="op">=</span><span class="st">'xy'</span>, scale_units<span class="op">=</span><span class="st">'xy'</span>,scale<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>plt.plot(r[:,<span class="dv">0</span>],r[:,<span class="dv">1</span>],<span class="st">'b--'</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'equal'</span>)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x [au]'</span>)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'y [au]'</span>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="motion_2d_3d_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The loop stops at <code>n-1</code>, since we cannot find the displacement from <code>i = n</code> to <code>i = n+1</code>. The arrow illustrating the (average) velocities are shown in the above figure.</p>
+<p>Similarly, the acceleration is approximately given by the change in velocities: <span class="math display">
+\boldsymbol{a} \simeq \frac{1}{\Delta t} (v(t_i) - v(t_{i-1})).
+</span> We use the velocities in <span class="math inline">t_i</span> and <span class="math inline">t_{i−1}</span> because the velocity in <span class="math inline">t_i</span> is calculated from the points <span class="math inline">t_i</span> and <span class="math inline">t_{i+1}</span> and the velocity in <span class="math inline">t_{i−1}</span> is calculated from the points <span class="math inline">t_{i−1}</span> and <span class="math inline">t_i</span>. In this way, the acceleration is properly centered. Namely, to find the acceleration in point 1, we need to use the velocities (displacements) from point 0 and 1.</p>
+<p>We can therefore illustrate the accelerations <span class="math display">
+\boldsymbol{a}_i \simeq \frac{1}{\Delta t^2}((\boldsymbol{r}_{i+1} - \boldsymbol{r}_i) - (\boldsymbol{r}_{i} - \boldsymbol{r}_{i-1}))
+</span> using the vector <span class="math display">
+\Delta \Delta \boldsymbol{r}_i = \boldsymbol{r}_{i+1} - 2\boldsymbol{r}_i + \boldsymbol{r}_{i-1},
+</span> which is implemented as:</p>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    plt.plot(r[i,<span class="dv">0</span>],r[i,<span class="dv">1</span>],<span class="st">'ko'</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    dr <span class="op">=</span> r[i<span class="op">+</span><span class="dv">1</span>,:] <span class="op">-</span> r[i,:]</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    plt.quiver(r[i,<span class="dv">0</span>],r[i,<span class="dv">1</span>],dr[<span class="dv">0</span>],dr[<span class="dv">1</span>],color<span class="op">=</span><span class="st">'b'</span>,angles<span class="op">=</span><span class="st">'xy'</span>, scale_units<span class="op">=</span><span class="st">'xy'</span>,scale<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'equal'</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x [au]'</span>)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'y [au]'</span>)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,n<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    ddr <span class="op">=</span> r[i<span class="op">+</span><span class="dv">1</span>,:] <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>r[i,:]<span class="op">+</span> r[i<span class="op">-</span><span class="dv">1</span>,:]</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    plt.quiver(r[i,<span class="dv">0</span>],r[i,<span class="dv">1</span>],ddr[<span class="dv">0</span>],ddr[<span class="dv">1</span>],color<span class="op">=</span><span class="st">'r'</span>,angles<span class="op">=</span><span class="st">'xy'</span>, scale_units<span class="op">=</span><span class="st">'xy'</span>,scale<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="motion_2d_3d_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Already from this very simple figure we gain insight into the motion: The acceleration is toward the center of the trajectory and the acceleration is decreasing in magnitude since the length of the arrows are decreasing.</p>
+<p><strong>Plotting the trajectory—High resolution data:</strong> Fortunately, we have access to data with much higher time resolution in the file <a href="https://folk.universitetetioslo.no/malthe/mechbook/marsexpresshr.d">marsexpresshr.d</a>. We read and plot the data using the same method as before:</p>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>t,x,y<span class="op">=</span>np.loadtxt(<span class="st">'./motion_2d_3d_files/marsexpresshr.d'</span>,usecols<span class="op">=</span>[<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>],unpack<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(t)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> np.zeros((n,<span class="dv">2</span>),<span class="bu">float</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>r[:,<span class="dv">0</span>] <span class="op">=</span> x</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>r[:,<span class="dv">1</span>] <span class="op">=</span> y</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>AU <span class="op">=</span> <span class="fl">149598000.0</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> r<span class="op">/</span>AU</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>plt.plot(r[:,<span class="dv">0</span>],r[:,<span class="dv">1</span>])</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'equal'</span>)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x [au]'</span>)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'y [au]'</span>)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="motion_2d_3d_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p><strong>Calculating velocity and acceleration:</strong> The velocity at <span class="math inline">t_i</span> is the time derivative of <span class="math inline">\boldsymbol{r}(t)</span> at <span class="math inline">t_i</span>, which we approximate by the numerical derivative over the time interval <span class="math inline">\Delta t</span>, when <span class="math inline">\Delta t</span> is small: <span class="math display">
+\boldsymbol{v}(t_i) = \frac{d\boldsymbol{r}}{dt}(t_i) \simeq \frac{\boldsymbol{r}_{i+1} - \boldsymbol{r}_i}{\Delta t}.
+</span></p>
+<p>Regarding the accelaration, we take <span class="math display">
+\boldsymbol{a}_i \simeq \frac{1}{\Delta t}((\boldsymbol{v}_{i} - \boldsymbol{v}_{i-1})
+</span></p>
+<p>This is implemented in the following.</p>
+<div class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(r)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> t[<span class="dv">1</span>]<span class="op">-</span>t[<span class="dv">0</span>]</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> (r[<span class="dv">1</span>:,:] <span class="op">-</span> r[:<span class="op">-</span><span class="dv">1</span>,:])<span class="op">/</span>dt </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> (v[<span class="dv">1</span>:,:] <span class="op">-</span> v[:<span class="op">-</span><span class="dv">1</span>,:])<span class="op">/</span>dt</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>plt.plot(t[:<span class="op">-</span><span class="dv">1</span>], np.linalg.norm(v,axis<span class="op">=</span><span class="dv">1</span>),<span class="st">'b-'</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'t [days]'</span>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'v [au/days]'</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>plt.plot(t[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>], np.linalg.norm(a,axis<span class="op">=</span><span class="dv">1</span>),<span class="st">'r-'</span>)</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'t [days]'</span>)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="vs">r'$a [au/days^2]$'</span>)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="motion_2d_3d_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="motion_2d_3d_files/figure-html/cell-17-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Note that we used <code>np.linalg.norm(v,axis=1)</code> to compute the magnitudes of <code>v[0,:]</code>, <code>v[1,:]</code>, <code>v[2,:]</code>, <span class="math inline">\cdots</span>.</p>
 </section>
 </section>
 <section id="homework" class="level1" data-number="3">

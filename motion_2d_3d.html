@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Motion in 2D and 3D</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="motion_2d_3d_files/libs/clipboard/clipboard.min.js"></script>
+<script src="motion_2d_3d_files/libs/quarto-html/quarto.js"></script>
+<script src="motion_2d_3d_files/libs/quarto-html/popper.min.js"></script>
+<script src="motion_2d_3d_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="motion_2d_3d_files/libs/quarto-html/anchor.min.js"></script>
+<link href="motion_2d_3d_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="motion_2d_3d_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="motion_2d_3d_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="motion_2d_3d_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="motion_2d_3d_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-full">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#vectors" id="toc-vectors" class="nav-link active" data-scroll-target="#vectors"><span class="toc-section-number">1</span>  Vectors</a>
+  <ul class="collapse">
+  <li><a href="#scalars-and-vectors" id="toc-scalars-and-vectors" class="nav-link" data-scroll-target="#scalars-and-vectors"><span class="toc-section-number">1.1</span>  Scalars and Vectors</a></li>
+  <li><a href="#vector-addition" id="toc-vector-addition" class="nav-link" data-scroll-target="#vector-addition"><span class="toc-section-number">1.2</span>  Vector Addition</a></li>
+  <li><a href="#scalar-multiplication" id="toc-scalar-multiplication" class="nav-link" data-scroll-target="#scalar-multiplication"><span class="toc-section-number">1.3</span>  Scalar Multiplication</a></li>
+  <li><a href="#vector-components" id="toc-vector-components" class="nav-link" data-scroll-target="#vector-components"><span class="toc-section-number">1.4</span>  Vector Components</a></li>
+  <li><a href="#the-dot-product" id="toc-the-dot-product" class="nav-link" data-scroll-target="#the-dot-product"><span class="toc-section-number">1.5</span>  The Dot Product</a></li>
+  <li><a href="#numerical-representation-of-vectors" id="toc-numerical-representation-of-vectors" class="nav-link" data-scroll-target="#numerical-representation-of-vectors"><span class="toc-section-number">1.6</span>  Numerical Representation of Vectors</a>
+  <ul class="collapse">
+  <li><a href="#addition-and-subtraction" id="toc-addition-and-subtraction" class="nav-link" data-scroll-target="#addition-and-subtraction">Addition and Subtraction</a></li>
+  <li><a href="#scalar-multiplication-1" id="toc-scalar-multiplication-1" class="nav-link" data-scroll-target="#scalar-multiplication-1">Scalar Multiplication</a></li>
+  <li><a href="#componentwise-operations" id="toc-componentwise-operations" class="nav-link" data-scroll-target="#componentwise-operations">Componentwise Operations</a></li>
+  <li><a href="#dot-product" id="toc-dot-product" class="nav-link" data-scroll-target="#dot-product">Dot Product</a></li>
+  <li><a href="#time-sequences-of-vectors" id="toc-time-sequences-of-vectors" class="nav-link" data-scroll-target="#time-sequences-of-vectors">Time Sequences of Vectors</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#description-of-motion" id="toc-description-of-motion" class="nav-link" data-scroll-target="#description-of-motion"><span class="toc-section-number">2</span>  Description of Motion</a>
+  <ul class="collapse">
+  <li><a href="#motion-diagram-and-position-vector" id="toc-motion-diagram-and-position-vector" class="nav-link" data-scroll-target="#motion-diagram-and-position-vector"><span class="toc-section-number">2.1</span>  Motion Diagram and Position Vector</a></li>
+  <li><a href="#velocity-vector" id="toc-velocity-vector" class="nav-link" data-scroll-target="#velocity-vector"><span class="toc-section-number">2.2</span>  Velocity Vector</a>
+  <ul class="collapse">
+  <li><a href="#speed" id="toc-speed" class="nav-link" data-scroll-target="#speed">Speed</a></li>
+  <li><a href="#time-derivatives-of-vector-functions" id="toc-time-derivatives-of-vector-functions" class="nav-link" data-scroll-target="#time-derivatives-of-vector-functions">Time Derivatives of Vector Functions</a></li>
+  </ul></li>
+  <li><a href="#acceleration" id="toc-acceleration" class="nav-link" data-scroll-target="#acceleration"><span class="toc-section-number">2.3</span>  Acceleration</a>
+  <ul class="collapse">
+  <li><a href="#notation-for-time-derivatives" id="toc-notation-for-time-derivatives" class="nav-link" data-scroll-target="#notation-for-time-derivatives">Notation for Time Derivatives</a></li>
+  <li><a href="#interpretation-of-motion-diagrams" id="toc-interpretation-of-motion-diagrams" class="nav-link" data-scroll-target="#interpretation-of-motion-diagrams">Interpretation of Motion Diagrams</a></li>
+  </ul></li>
+  <li><a href="#example-mars-express" id="toc-example-mars-express" class="nav-link" data-scroll-target="#example-mars-express"><span class="toc-section-number">2.4</span>  Example: Mars Express</a></li>
+  </ul></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="toc-section-number">3</span>  Homework</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Motion in 2D and 3D</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="vectors" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Vectors</h1>
+<p>The use of vectors to describe positions in two- and three-dimensional systems is essential in order to describe general motion.</p>
+<section id="scalars-and-vectors" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="scalars-and-vectors"><span class="header-section-number">1.1</span> Scalars and Vectors</h2>
+<p>A <em>scalar</em> is a single number (with notation), such as a length, a mass, or a temperature. In order to describe physical quantities such as a displacement or a force, we need to describe both a <em>magnitude</em> and a <em>direction</em>: A displacement is described by a distance and a direction; A force is described by the magnitude of the force and the direction it acts in.</p>
+</section>
+<section id="vector-addition" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="vector-addition"><span class="header-section-number">1.2</span> Vector Addition</h2>
+<p>Vector addition is intuitive for the addition of displacements (see <a href="#fig-vector-addition">Figure&nbsp;1</a>): If you first move along the vector <span class="math inline">\boldsymbol{a}</span> from <span class="math inline">A</span> to <span class="math inline">B</span>, and then along the vector <span class="math inline">\boldsymbol{b}</span> from <span class="math inline">B</span> to <span class="math inline">C</span>, the net displacement is the vector <span class="math display">
+\boldsymbol{c} = \boldsymbol{a} + \boldsymbol{b}
+</span> from point <span class="math inline">A</span> to <span class="math inline">C</span>.</p>
+<div id="fig-vector-addition" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="motion_2d_3d_files\vector_addition.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: (a) Illustration of vectors, (b) vector addition, (c) units vectors, decomposition and angle, (d) dot product</figcaption><p></p>
+</figure>
+</div>
+<p>This geometric definition of vector addition is general, and we use it also for vectors that are not displacements: We find the sum of two vectors <span class="math inline">\boldsymbol{a}</span> and <span class="math inline">\boldsymbol{b}</span> geometrically by placing the tail of vector <span class="math inline">\boldsymbol{b}</span> at the tip of vector <span class="math inline">\boldsymbol{a}</span>. The sum is called the <strong>resultant</strong> vector.</p>
+<p>From this definition, we realize that vector addition is <strong>commutative</strong>, the order of addition is arbitrary, and <strong>associative</strong>: <span class="math display">
+\begin{gather*}
+\boldsymbol{a} + \boldsymbol{b} =  \boldsymbol{b}+ \boldsymbol{a} \\
+\boldsymbol{a} + (\boldsymbol{b} + \boldsymbol{c}) =  
+(\boldsymbol{a} + \boldsymbol{b}) + \boldsymbol{c}
+\end{gather*}
+</span></p>
+</section>
+<section id="scalar-multiplication" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="scalar-multiplication"><span class="header-section-number">1.3</span> Scalar Multiplication</h2>
+<p>We can rescale the length of a vector by multiplying it with a scalar: <span class="math display">
+\boldsymbol{b} = 2\boldsymbol{a}.
+</span> Vector <span class="math inline">\boldsymbol{b}</span> is twice as long as vector <span class="math inline">\boldsymbol{a}</span>, but still pointing in the same direction. By multiplying a vector with a scalar we change the magnitude, but not the direction of the vector.</p>
+<p>If we multiply a vector by 0, we get a vector of zero length, called the <strong>zero vector</strong>: <span class="math display">
+0 \boldsymbol{a} = \boldsymbol{0}.
+</span></p>
+<p>If we multiply a vector by a negative number, we change the direction of the vector to point in the opposite direction. For example, if we multiply with a vector with <span class="math inline">-1</span>, we get the negative vector — a vector of the same length, but which points in the opposite direction.</p>
+</section>
+<section id="vector-components" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="vector-components"><span class="header-section-number">1.4</span> Vector Components</h2>
+<p>A coordinate system is a grid you choose to describe the world in numbers. You are free to choose any coordinate system you like: You may choose where to place the origin and how to orient the axis. When you have decided on this, we use the coordinate system to describe a vector by <em>decomposing</em> the vector in the given coordinate system.</p>
+<p>Here, we use <em>Cartesian</em> coordinate systems, where the axes are orthogonal to each other. We describe the coordinate system by the position of the origin, <span class="math inline">O</span>, and by unit vectors pointing along each axis: the <span class="math inline">x</span>-, <span class="math inline">y</span>-, and <span class="math inline">z</span>-axis. The unit vectors are of unit length, of length 1, and do not have any unit. The unit vectors are orthogonal, they form <span class="math inline">90^\circ</span> angles with each other, as illustrated in <a href="#fig-vector-addition">Figure&nbsp;1</a> (c). It is common to use the symbol <span class="math inline">\boldsymbol{i}</span>, <span class="math inline">\boldsymbol{j}</span>, and <span class="math inline">\boldsymbol{k}</span> for the unit vectors along the <span class="math inline">x</span>, <span class="math inline">y</span>, and <span class="math inline">z</span>-axis respectively.</p>
+<p>Any vector can be uniquely decomposed into a set of component vectors along each of the axes: <span class="math display">
+\boldsymbol{A} = \boldsymbol{A}_x + \boldsymbol{A}_y,
+</span> where each of the component vectors can be written in terms of the unit vector along the axis: <span class="math display">
+\boldsymbol{A}_x = A_x \boldsymbol{i},\quad \boldsymbol{A}_y = A_y\boldsymbol{j}.
+</span> Here, the units of the vectors are in the scalar numbers <span class="math inline">A_x</span> and <span class="math inline">A_y</span>.</p>
+<p>If you know the magnitude and direction of a vector, you can find the component of the vector from trigonometrical considerations. For example, the vector <span class="math inline">\boldsymbol{A}</span> shown in <a href="#fig-vector-addition">Figure&nbsp;1</a> (c), may be decomposed into its <span class="math inline">x</span>- and <span class="math inline">y</span>-components by: <span class="math display">
+\boldsymbol{A} = A_x \boldsymbol{i} + A_y \boldsymbol{j} = |\boldsymbol{A}|\cos\phi \boldsymbol{i} + |\boldsymbol{A}|\sin\phi \boldsymbol{j}.
+</span></p>
+<p>We may write a vector by using the unit vectors or by writing the vector directly in coordinate form: <span class="math display">
+\boldsymbol{A} = A_x \boldsymbol{i} + A_y \boldsymbol{j} + A_z \boldsymbol{k} = (A_x, A_y, A_z).
+</span></p>
+<p>The dot product is <strong>linear</strong>: $$</p>
+</section>
+<section id="the-dot-product" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="the-dot-product"><span class="header-section-number">1.5</span> The Dot Product</h2>
+<p>The <strong>dot product</strong> between two vectors <span class="math inline">\boldsymbol{A}</span> and <span class="math inline">\boldsymbol{B}</span> is defined as: <span class="math display">
+\boldsymbol{A} \cdot \boldsymbol{B} = |\boldsymbol{A}||\boldsymbol{B}|\cos\alpha,
+</span> where <span class="math inline">\alpha</span> is the angle between the two vectors, as illustrated in <a href="#fig-vector-addition">Figure&nbsp;1</a> (d).</p>
+<p>The dot product is <strong>linear</strong>: <span class="math display">
+(\boldsymbol{A} + \boldsymbol{B}) \cdot \boldsymbol{C} =
+\boldsymbol{A} \cdot \boldsymbol{C} + \boldsymbol{B} \cdot \boldsymbol{C},
+</span> and <strong>commutative</strong>: <span class="math inline">\boldsymbol{A}\cdot\boldsymbol{B}=\boldsymbol{B}\cdot\boldsymbol{A}</span>.</p>
+<ul>
+<li>When two vectors are parallel and point in the same direction, the dot product is equal to the product of the magnitudes.</li>
+<li>The dot product of two orthogonal vectors is zero.</li>
+</ul>
+<p>The dot product is simple on component form <span class="math display">
+\begin{align*}
+\boldsymbol{A}\cdot\boldsymbol{B} &amp; =(A_{x}\boldsymbol{i}+A_{y}\boldsymbol{j})\cdot(B_{x}\boldsymbol{i}+B_{y}\boldsymbol{j})\\
+&amp; =A_{x}B_{x}\underbrace{\boldsymbol{i}\cdot\boldsymbol{i}}_{1}+A_{x}B_{y}\underbrace{\boldsymbol{i}\cdot\boldsymbol{j}}_{0}+A_{y}B_{x}\underbrace{\boldsymbol{j}\cdot\boldsymbol{i}}_{0}+A_{y}B_{y}\underbrace{\boldsymbol{j}\cdot\boldsymbol{j}}_{1}\\
+&amp; =A_{x}B_{x}+A_{y}B_{y}
+\end{align*}
+</span></p>
+<p>The value of the dot product is independent of the unit vectors used to decompose the vectors. We say that the dot product is invariant under a change of coordinate system.</p>
+<p>What makes the dot product so useful, is that it can be used to decompose a vector onto a given set of unit vector—it can be used to find the components of a vector in any given coordinate system. A vector A can be written in component form as: <span class="math display">
+\boldsymbol{A} = A_x \boldsymbol{i} + A_y \boldsymbol{j} + A_z \boldsymbol{k}.
+</span></p>
+<p>How can we determine the components <span class="math inline">A_x</span> , <span class="math inline">A_y</span> , and <span class="math inline">A_z</span>? We find them by using to dot product, and remembering that the unit vectors are orthogonal. We find component <span class="math inline">A_x</span> from: <span class="math display">
+\boldsymbol{A}\cdot \boldsymbol{i}
+= A_x \boldsymbol{i}\cdot\boldsymbol{i} + A_y \boldsymbol{j}\cdot\boldsymbol{i}
++ A_z \boldsymbol{k}\cdot\boldsymbol{i}  = A_x.
+</span></p>
+<p>Thus, we have <span class="math display">
+\boldsymbol{A} = (\boldsymbol{A} \cdot \boldsymbol{i})\boldsymbol{i}
++ (\boldsymbol{A} \cdot \boldsymbol{j})\boldsymbol{j}
++ (\boldsymbol{A} \cdot \boldsymbol{k})\boldsymbol{k}
+</span></p>
+</section>
+<section id="numerical-representation-of-vectors" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="numerical-representation-of-vectors"><span class="header-section-number">1.6</span> Numerical Representation of Vectors</h2>
+<p>In Python (numpy) a vector is represented by its <em>component form</em>. The vector <span class="math inline">\boldsymbol{a}</span>: <span class="math display">
+\boldsymbol{a} = 1\boldsymbol{i} + 2 \boldsymbol{j}  = (1,2,0).
+</span> It can be generated by the following command:</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="addition-and-subtraction" class="level3">
+<h3 class="anchored" data-anchor-id="addition-and-subtraction">Addition and Subtraction</h3>
+<p>All the ordinary mathematical operations can be applied to vectors just as you would apply them to scalars. For example, vector addition is achieved by:</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Need to import numpy as np</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.array([<span class="dv">2</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">0</span>])</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> a <span class="op">+</span> b</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(c)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[ 3 -2  0]</code></pre>
+</div>
+</div>
+<p>You can decide if you want to use a vector in two- or three dimensions. For example, you could instead have defined the vector a as: <code>a = np.array([1,2])</code>. But notice that you cannot add two vectors that do not have the same number of components.</p>
+</section>
+<section id="scalar-multiplication-1" class="level3">
+<h3 class="anchored" data-anchor-id="scalar-multiplication-1">Scalar Multiplication</h3>
+<p>Scalar multiplication is similarly naturally implemented:</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> <span class="dv">3</span><span class="op">*</span>a</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[3 6 0]</code></pre>
+</div>
+</div>
+</section>
+<section id="componentwise-operations" class="level3">
+<h3 class="anchored" data-anchor-id="componentwise-operations">Componentwise Operations</h3>
+<p>Notice that there is room for error because of the way commands are interpreted. For example, if you add a scalar to a vector, this is interpreted as a <em>componentwise</em> addition: The scalar is added to each of the components</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>e<span class="op">=</span>a<span class="op">+</span><span class="dv">3</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(e)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[4 5 3]</code></pre>
+</div>
+</div>
+</section>
+<section id="dot-product" class="level3">
+<h3 class="anchored" data-anchor-id="dot-product">Dot Product</h3>
+<p>The dot product is found by applying the function <code>np.dot()</code>, which returns a scalar:</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> np.dot(a,b)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>-6</code></pre>
+</div>
+</div>
+<p>A common application of the dot product is to find the component of a vector <span class="math inline">\boldsymbol{a}</span> along the direction given by a vector <span class="math inline">\boldsymbol{b}</span>. In general, <span class="math inline">\boldsymbol{b}</span>, is not a unit vector. We therefore first need to find a unit vector in the direction of <span class="math inline">\boldsymbol{b}</span>: <span class="math display">
+\hat{\boldsymbol{b}} = \frac{\boldsymbol{b}}{|\boldsymbol{b}|}.
+</span></p>
+<p>The component of <span class="math inline">\boldsymbol{a}</span> in this direction is given by the dot product: <span class="math display">
+a_b = \boldsymbol{a}\cdot \hat{\boldsymbol{b}}.
+</span> Numerically, this is done in exactly the same way:</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ab <span class="op">=</span> np.dot(a,b)<span class="op">/</span>np.sqrt(np.dot(b,b))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>-1.3416407864998738</code></pre>
+</div>
+</div>
+<p>Notice that we use the relation: <span class="math display">
+|\boldsymbol{b}| = \sqrt{\boldsymbol{b} \cdot \boldsymbol{b}}
+</span> for the magnitude of <span class="math inline">\boldsymbol{b}</span>.</p>
+</section>
+<section id="time-sequences-of-vectors" class="level3">
+<h3 class="anchored" data-anchor-id="time-sequences-of-vectors">Time Sequences of Vectors</h3>
+<p>We will often work with a sequence of vectors, corresponding to the time evolution of a vector. For example, we may be interested in the position, <span class="math inline">\boldsymbol{r}</span>, or the force, <span class="math inline">\boldsymbol{F}</span>, as a function of time, <span class="math inline">t</span>: <span class="math inline">\boldsymbol{r}(t)</span> and <span class="math inline">\boldsymbol{F}(t)</span>. Numerically, we will have a corresponding sequence of positions or forces at discrete times, <span class="math inline">t_i</span>: <span class="math display">
+\boldsymbol{r}_i = \boldsymbol{r}(t_i),\quad \boldsymbol{F}_i = \boldsymbol{F}(t_i).
+</span></p>
+<p>Fortunately, it is simple to both represent and apply mathematical operations to an element in a sequence. We generate a sequence of <span class="math inline">n</span> vectors <span class="math inline">\boldsymbol{r}_i</span> with <span class="math inline">x</span>, <span class="math inline">y</span>, and <span class="math inline">z</span> coordinates by:</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> np.zeros((n,<span class="dv">3</span>),dtype <span class="op">=</span> np.float64)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can use mathematical vector operations directly on element in the sequence, as illustrated in the following example:</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> np.array([<span class="fl">1.0</span>,<span class="op">-</span><span class="fl">2.0</span>,<span class="fl">2.0</span>])</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>rlist <span class="op">=</span> np.zeros((n,<span class="dv">3</span>),<span class="bu">float</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> jj <span class="kw">in</span> <span class="bu">range</span>(n<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    rlist[jj<span class="op">+</span><span class="dv">1</span>] <span class="op">=</span> rlist[jj] <span class="op">+</span> v<span class="op">*</span>dt</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(rlist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[ 0.   0.   0. ]
+ [ 0.1 -0.2  0.2]
+ [ 0.2 -0.4  0.4]
+ [ 0.3 -0.6  0.6]
+ [ 0.4 -0.8  0.8]
+ [ 0.5 -1.   1. ]
+ [ 0.6 -1.2  1.2]
+ [ 0.7 -1.4  1.4]
+ [ 0.8 -1.6  1.6]
+ [ 0.9 -1.8  1.8]]</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="description-of-motion" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Description of Motion</h1>
+<p>The cheetah is the world fastest land animal. How can we characterize its motion as it chases its prey? How fast does it run and how fast does it turn?</p>
+<section id="motion-diagram-and-position-vector" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="motion-diagram-and-position-vector"><span class="header-section-number">2.1</span> Motion Diagram and Position Vector</h2>
+<p><a href="#fig-cheetah">Figure&nbsp;2</a> shows a few frames from a movie of a cheetah chasing a Thompson gazelle. To quantify the motion we generate a motion diagram: We mark the position of the cheetah at regular time intervals and record the positions <span class="math inline">\boldsymbol{r}(t_i)</span> of the cheetah relative to the origin at time <span class="math inline">t_i</span>.</p>
+<div id="fig-cheetah" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="motion_2d_3d_files/cheetah.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: Illustration of a cheetah chasing a Thompson gazelle, and an illustration of the two-dimensional motion and the two-dimensional motion diagram.</figcaption><p></p>
+</figure>
+</div>
+<p>We are free to choose the origin and the axes of the coordinate system. The origin determines where we measure the positions from. In <a href="#fig-cheetah">Figure&nbsp;2</a> we have chosen a stationary point on the ground as the origin. In addition to the origin, a coordinate system consists of a set of axes that we use to decompose the position vector. The directions of the axes indicate the positive direction of the corresponding unit vector. The position can be decomposed along the <span class="math inline">x</span>, <span class="math inline">y</span>, and <span class="math inline">z</span>-axes respectively : <span class="math display">
+\boldsymbol{r}(t) = x(t) \boldsymbol{i} + y(t)\boldsymbol{j} + z(t)\boldsymbol{k},
+</span> where <span class="math inline">x(t)</span>, <span class="math inline">y(t)</span>, and <span class="math inline">z(t)</span> are lengths along the axes and hence have units of length.</p>
+<div id="tbl-cheetah" class="anchored">
+<table class="table">
+<caption>Table&nbsp;1: Demonstration of pipe table sytnax</caption>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">t_i</span>(s)</td>
+<td>0.0</td>
+<td>0.5</td>
+<td>1.0</td>
+<td>1.5</td>
+<td>2.0</td>
+<td>2.5</td>
+<td>3.0</td>
+<td>3.5</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">x_i</span>(m)</td>
+<td>0.0</td>
+<td>16.2</td>
+<td>29.9</td>
+<td>38.9</td>
+<td>46.6</td>
+<td>57.2</td>
+<td>71.7</td>
+<td>84.8</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">y_i</span>(m)</td>
+<td>15.0</td>
+<td>14.95</td>
+<td>19.0</td>
+<td>26.1</td>
+<td>31.3</td>
+<td>35.4</td>
+<td>35.7</td>
+<td>30.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>For example, the position at <span class="math inline">t=1.0</span>s is: <span class="math display">
+\boldsymbol{r}(1.0\mathrm{s}) = x(1.0\mathrm{s})\boldsymbol{i} + y(1.0\mathrm{s})\boldsymbol{j} = 29.9\mathrm{m}\boldsymbol{i} + 19.0\mathrm{m}\boldsymbol{j} = (29.9, 19.0)\mathrm{m},
+</span> where we have skipped the <span class="math inline">z</span>-coordinate since all the motion is in the <span class="math inline">xy</span>-plane. We have tabulated the positions at <span class="math inline">\Delta t = 0.5</span>s intervals in <a href="#tbl-cheetah">Table&nbsp;1</a>.</p>
+</section>
+<section id="velocity-vector" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="velocity-vector"><span class="header-section-number">2.2</span> Velocity Vector</h2>
+<p><a href="#fig-cheetah">Figure&nbsp;2</a> shows how the position changes over a time interval <span class="math inline">\Delta t</span>. The change in position is also a vector and is called the <strong>displacement</strong>. The displacement from <span class="math inline">t=1.0\mathrm{s}</span> to <span class="math inline">t=2.0\mathrm{s}</span> is denoted as <span class="math inline">\Delta \boldsymbol{r}(1.0\mathrm{s})</span>: <span class="math display">
+\Delta \boldsymbol{r}(1.0\mathrm{s}) =
+\boldsymbol{r}(2.0\mathrm{s}) - \boldsymbol{r}(1.0\mathrm{s})
+= (46.6, 31.3)\mathrm{m} - (29.9, 19.0)\mathrm{m}
+= (16.7, 12.3)\mathrm{m}.
+</span></p>
+<p>Because the displacement depends on a difference between two positions, it <strong>does not depend on the choice of origin</strong>.</p>
+<p>We see <a href="#fig-cheetah">Figure&nbsp;2</a> that both the length and the direction of the displacement vectors are changing throughout the motion. The rate of change of the displacement, the velocity, must therefore also be a vector.</p>
+<div class="callout-tip callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The <strong>average velocity</strong> from a time <span class="math inline">t = t_0</span> to a time <span class="math inline">t = t_0 + \Delta t</span> is defined as <span class="math display">
+\overline{\boldsymbol{v}}(t_0) = \frac{\boldsymbol{r}(t_0+\Delta t) - \boldsymbol{r}(t_0)}{\Delta t} = \frac{\Delta \boldsymbol{r}(t_0)}{\Delta t}.
+</span> It is measured in meters per second, m/s.</p>
+</div>
+</div>
+</div>
+<p>We find the average velocity at <span class="math inline">t = 1.0\mathrm{s}</span> using the data in the table above: <span class="math display">
+\overline{\boldsymbol{v}}(1.0\mathrm{s}) = \frac{\Delta \boldsymbol{r}(1.0\mathrm{s})}{1.0\mathrm{s}} = (16.7, 12.3)\mathrm{m/s}.
+</span></p>
+<p>If we instead use a time interval <span class="math inline">\Delta t = 0.5 \mathrm{s}</span> to find the average velocity at <span class="math inline">t = 1.0\mathrm{s}</span> we find: <span class="math display">
+\overline{\boldsymbol{v}}(1.0\mathrm{s})  = \frac{\boldsymbol{r}(1.5\mathrm{s}) - \boldsymbol{r}(1.0\mathrm{s})}{\Delta t} = \frac{(38.9,26.1) - (29.9, 19.0)}{0.5}\mathrm{m/s} = (18.0, 14.2)\mathrm{m/s}.
+</span></p>
+<p>We see that the average velocity depends on the time interval <span class="math inline">\Delta t</span>. We can understand this better by studying the displacement at <span class="math inline">t = 1.0\mathrm{s}</span> for smaller and smaller time intervals <span class="math inline">\Delta t</span>, as shown in <a href="#fig-average-velocity">Figure&nbsp;3</a>. We see that as <span class="math inline">\Delta t</span> becomes smaller, the displacement also becomes smaller, but its direction approaches the tangent to the curve describing the motion around <span class="math inline">t = 1.0 \mathrm{s}</span>.</p>
+<div id="fig-average-velocity" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="motion_2d_3d_files/average_velocity.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3: Illustration of the average velocity, <span class="math inline">\overline{\boldsymbol{v}}(2.0\mathrm{s})</span> for decreasing time intervals <span class="math inline">\Delta t</span> for the motion of the cheetah</figcaption><p></p>
+</figure>
+</div>
+<div class="callout-tip callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The <strong>instantaneous velocity</strong> at the time <span class="math inline">t</span> is defined as the limit of the average velocity when the time interval <span class="math inline">\Delta t</span> goes to zero, that is, the <strong>time derivative</strong> of the position vector, <span class="math inline">\boldsymbol{r}(t)</span>, <span class="math display">
+\boldsymbol{v}(t) = \lim_{\Delta t\to 0}\frac{\Delta \boldsymbol{r}(t)}{\Delta t} = \lim_{\Delta \to 0} \frac{\boldsymbol{r}(t_0 + \Delta t) - \boldsymbol{r}(t_0)}{\Delta t} \equiv \frac{d\boldsymbol{r}}{dt}(t).
+</span> Whenever we use the term velocity, we will mean the instantaneous velocity. The velocity vector is <em>tangential</em> to the trajectory.</p>
+</div>
+</div>
+</div>
+<section id="speed" class="level3">
+<h3 class="anchored" data-anchor-id="speed">Speed</h3>
+<p>The magnitude of the velocity vector is called the <strong>speed</strong>, <span class="math inline">v</span>, defined as: <span class="math display">
+v(t) = |\boldsymbol{v}(t)|.  
+</span> We use the word <em>velocity</em> for the <em>velocity vector</em>, and the word <em>speed</em> for the <em>magnitude</em> of the vector velocity.</p>
+</section>
+<section id="time-derivatives-of-vector-functions" class="level3">
+<h3 class="anchored" data-anchor-id="time-derivatives-of-vector-functions">Time Derivatives of Vector Functions</h3>
+<p>How do we find the derivative of a vector function such as <span class="math inline">\boldsymbol{r}(t)</span>? The simplest approach is to write the vector in terms of the unit vectors for the coordinate system, and then take the derivative of each component: <span class="math display">
+\boldsymbol{v}(t) = \frac{d}{dt}(\boldsymbol{r}(t))
+= \frac{d}{dt}(x(t),y(t),z(t))
+= (\frac{dx}{dt}(t),\frac{dy}{dt}(t),\frac{dz}{dt}(t))
+\equiv (v_x(t), v_y(t),v_z(t)).
+</span></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+A crash course on derivatives
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Derivatives: All About Change</strong> <br></p>
+<p>Suppose you have some function (it doesn’t have to be <span class="math inline">x</span> vs.&nbsp;<span class="math inline">y</span>, it could be anything). What if I want to know how this function changes as the variable changes? That’s what the derivative tells you. Let me start with a couple of examples.</p>
+<p>There is a car moving and its position in the x-direction can be described by the following function: <span class="math display">
+x(t) = (2.5 \mathrm{m/s})t + (1.1 \mathrm{m}).
+</span></p>
+<p>If I plot this function, it is shown in the following (I am adding twoin points so that we can look at the change in position).</p>
+<p><img src="motion_2d_3d_files/derivative-1.jpg" class="img-fluid"></p>
+<p>How does this function change with time? If I take two points (<span class="math inline">t_1</span> and <span class="math inline">t_2</span>) I can calculate the change in x divided by the change in <span class="math inline">t</span>. Yes, this would be the <strong>slope</strong> of the function: <span class="math display">
+\mathrm{slope} = \frac{\Delta x}{\Delta t} = \frac{x_2 - x_1}{t_2 - t_1}.
+</span></p>
+<p>Ok, that was fairly simple and not that interesting. How about another example? Suppose I have this function for the position of an object in the <span class="math inline">x</span>-direction? <span class="math display">
+x(t) = (3.3 \mathrm{m/s^2})t^2 + (2.5 \mathrm{m/s})t + (1.1\mathrm{m})
+</span></p>
+<p>It is plotted in the following: <img src="motion_2d_3d_files/derivative-2.jpg" class="img-fluid"></p>
+<p>In this case, the average velocity (the slope) going from point 2 to 3 is different than the average slope going from points 4 to 5. Then how do we make a graph of velocity vs.&nbsp;time? What time would we associate the average velocity with? Probably the only fair thing would be to take two time points and find the slope and then associate the slope with the average of these two points. In fact, this works perfectly with the above function. When you do that, you get the following plot of slope (velocity) vs.&nbsp;time.</p>
+<p><img src="motion_2d_3d_files/derivative-3.jpg" class="img-fluid"></p>
+<p>That “average time” trick doesn’t always work. However, I can make it almost work if I use very tiny time intervals. In that case, it doesn’t matter which time (beginning, end, middle) is associated with the time. So, tiny time intervals are nice.</p>
+<p>What if you use a zero second time interval? Well, you can’t do that. However, you can do some thing close to a zero second interval. You can find the value of the average velocity in the limit as <span class="math inline">\Delta t</span> goes to zero seconds. This is in fact what we call a derivative. We can write it as: <span class="math display">
+v = \lim_{\Delta t\to 0}\frac{\Delta x}{\Delta t}.
+</span></p>
+<p>It shows the important point that the derivative is just a way to express how a function changes.</p>
+<p><strong>Example: The Sine Function</strong> <br></p>
+<p>You know the sine function right? Ssuppose that a mass is oscillating back and forth with the following position function. <span class="math display">
+x(t) = (0.2\mathrm{m})\sin\left((2.1 \mathrm{rad/s})t\right)
+</span> Now let me plot this along with some points.</p>
+<p><img src="motion_2d_3d_files/derivative-4.jpg" class="img-fluid"></p>
+<p>Here you can see that by just picking some point (evenly spaced) on the function, I could find the slope between these points. However, there are several instances where this rate of change for these points is not a good representation of the slope of this function. Yes, we can make this better by putting the points much closer together. If I use a time interval of 0.01 seconds, I get the following for the velocity as a function of time.</p>
+<p><img src="motion_2d_3d_files/derivative-5.jpg" class="img-fluid"></p>
+<p>Yes, that looks like a cosine function and NO I did not just plot the cosine function. In fact, here is the exact program I used to make this program.</p>
+<div class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> <span class="fl">0.01</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">4</span>, dt)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fl">0.2</span> <span class="op">*</span> np.sin(<span class="fl">2.1</span> <span class="op">*</span> t)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> (x[<span class="dv">1</span>:] <span class="op">-</span> x[:<span class="op">-</span><span class="dv">1</span>])<span class="op">/</span>dt</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>fig,ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>,<span class="dv">1</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>plt.subplots_adjust(wspace<span class="op">=</span><span class="fl">0.2</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].plot(t,x,<span class="st">'r-'</span>,label<span class="op">=</span><span class="st">'Sin(2.1 t)'</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">'x'</span>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co"># ax[0].set_xlabel('t')</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].plot(t[:<span class="op">-</span><span class="dv">1</span>],v,<span class="st">'b--'</span>,label<span class="op">=</span><span class="vs">r'$\Delta x/\Delta t$'</span>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].plot(t,<span class="fl">2.1</span><span class="op">*</span><span class="fl">0.2</span><span class="op">*</span>np.cos(<span class="fl">2.1</span><span class="op">*</span>t),<span class="st">'g-'</span>,label<span class="op">=</span><span class="vs">r'$2.1\times 0.2\times \cos(2.1 t)$'</span>)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].set_ylabel(<span class="st">'v'</span>)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].set_xlabel(<span class="st">'t'</span>)</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="39">
+<pre><code>&lt;matplotlib.legend.Legend at 0x2022798b850&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="motion_2d_3d_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Note that in the above code, I have used the fact that: <code>x[1:]</code> <span class="math inline">=(x_1,x_2,\dots,x_N)</span> and <code>x[:-1]</code> <span class="math inline">=(x_0,x_1,\dots,x_{N-1})</span>. Thus, we can compute the velocities <span class="math display">
+(v_0,v_1,\dots,v_{N-1}) = \frac{(x_1,x_2,\dots,x_N) - (x_0,x_1,\dots,x_{N-1})}{\Delta t}.
+</span></p>
+<p><strong>But how do you take a derivative?</strong> <br></p>
+<p>Say we want to evaluate <span class="math inline">\frac{d}{dt}x</span> at <span class="math inline">t=t_0</span>.</p>
+<p><strong>Numerically</strong>, this is simple. We just choose a small <span class="math inline">\Delta t</span>. Then compute <span class="math display">
+\frac{d}{dt}x(t_0) = \frac{x(t_0+\Delta t) - x(t_0)}{\Delta t} + O(\Delta t)
+</span> where <span class="math inline">O(\Delta t)</span> means there is an error if <span class="math inline">\Delta t</span> is finite, which is of order <span class="math inline">\Delta t</span> (i.e.&nbsp;the error is proportional to <span class="math inline">\Delta t</span>).</p>
+<p>Alternatively, we can compute this numerically via <span class="math display">
+\frac{d}{dt}x(t_0) = \frac{x(t_0+\Delta t/2) - x(t_0-\Delta t/2)}{\Delta t} + O(\Delta t^2),
+</span> and it turns out the error is proportional to <span class="math inline">\Delta t^2</span> in this case.</p>
+<p>The latter formula is better in the sense that when <span class="math inline">\Delta t</span> is small, <span class="math inline">O(\Delta t^2) \ll O(\Delta t)</span>, so that we can get a better approximation with the latter formula.</p>
+<p><strong>Analytically</strong>, we can compute derivatives for a few simple functions:</p>
+<ul>
+<li><span class="math inline">\frac{d}{dt} (t^n) = n t^{n-1}</span></li>
+<li><span class="math inline">\frac{d}{dt} \sin(t) = \cos(t)</span></li>
+<li><span class="math inline">\frac{d}{dt} \cos(t) = -\sin(t)</span></li>
+<li><span class="math inline">\frac{d}{dt} \exp(t) = \exp(t)</span>.</li>
+</ul>
+<p>For slightly more complicated functions, one can use the following rules:</p>
+<ul>
+<li>Linear rule: If <span class="math inline">x(t) = f(t) + g(t)</span>, then <span class="math display">
+  \frac{d}{dt} x(t) = \frac{d}{dt}f(t) + \frac{d}{dt}g(t).
+  </span> Moreover, if <span class="math inline">x(t) = A y(t)</span>, with a constant <span class="math inline">A</span>, <span class="math display">
+  \frac{d}{dt}x(t) = A\frac{d}{dt}y(t).
+  </span></li>
+<li>Product rule: If <span class="math inline">x(t) = g(t)f(t)</span>, then <span class="math display">
+  \frac{d}{dt} x(t) = \left[\frac{d}{dt}g(t)\right]f(t) + g(t)\left[\frac{d}{dt}f(t)\right].
+  </span></li>
+<li>Chain rule: If <span class="math inline">x(t) = f(u(t))</span>, then <span class="math display">
+  \frac{d}{dt}x(t) = \left[\frac{d}{du}f(u)\right]\left[\frac{d}{dt}u(t)\right].
+  </span></li>
+</ul>
+<p>For example, consider <span class="math inline">x(t) = 0.2 \sin(2.1 t)</span>, we have <span class="math display">
+\frac{d}{dt}x(t) = 0.2 \frac{d}{dt}\sin(2.1 t) = 0.2 \times \cos(2.1 t) \times 2.1 = 0.42 \cos(2.1 t).
+</span></p>
+<p>Last but not least, if you do not want to analytically compute the derivatives, some <em>compute algebra systems (CAS)</em> can help you to do this calculation (called <em>symbolic calculation</em>, rather than numerical calculation). There are commercial oftwares: <a href="https://www.wolfram.com/mathematica/"><code>Mathematica</code></a> and <a href="https://www.maplesoft.com/products/Maple/"><code>Maple</code></a>. There are also free alternatives: <a href="https://www.sagemath.org/"><code>SageMath</code></a>, <a href="https://maxima.sourceforge.io/"><code>Maxima</code></a> (which is also contained in <code>SageMath</code>), and even a python library called <a href="https://www.sympy.org/en/index.html"><code>Sympy</code></a>.</p>
+<p>In the following, I will show you how to calculate derivatives using the python library <code>Sympy</code>.</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sympy <span class="im">as</span> syp</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>x, y, z <span class="op">=</span> syp.symbols(<span class="st">'x y z'</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> syp.symbols(<span class="st">'n'</span>, integer<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>display(syp.diff(syp.cos(x), x))</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>display(syp.diff(syp.sin(x), x))</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>display(syp.diff(x<span class="op">**</span>n, x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>-sin(x)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>cos(x)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>n*x**n/x</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="acceleration" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="acceleration"><span class="header-section-number">2.3</span> Acceleration</h2>
+<p>The average acceleration vector over a time interval <span class="math inline">\Delta t</span> from <span class="math inline">t</span> to <span class="math inline">t + \Delta t</span> is defined as: <span class="math display">
+\overline{\boldsymbol{a}} = \frac{\boldsymbol{v}(t + \Delta t) - \boldsymbol{v}(t)}{\Delta t}.
+</span></p>
+<div class="callout-tip callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>We define the <strong>instantaneous acceleration vector</strong>, or simply the instantaneous acceleration, as the limit of the average acceleration vector when the time interval approaches zero: <span class="math display">
+\boldsymbol{a}(t) = \lim_{\Delta t \to 0} \frac{v(t + \Delta t) - v(t)}{\Delta t} = \frac{d\boldsymbol{v}}{dt} \equiv \dot{\boldsymbol{v}}.
+</span> Thus, the acceleration vector is the time derivative of the velocity vector.</p>
+</div>
+</div>
+</div>
+<p>One can write <span class="math display">
+\boldsymbol{a}(t) = (a_x(t), a_y(t), a_z(t)) = (\frac{dv_x}{dt}(t),\frac{dv_y}{dt}(t),\frac{dv_z}{dt}(t)) = (\frac{d^2 x}{dt^2}(t),\frac{d^2 y}{dt^2}(t),\frac{d^2 z}{dt^2}(t) ).
+</span></p>
+<section id="notation-for-time-derivatives" class="level3">
+<h3 class="anchored" data-anchor-id="notation-for-time-derivatives">Notation for Time Derivatives</h3>
+<p>In physics, we use both <span class="math inline">d/dt</span> and the dot notation for time derivatives: <span class="math display">
+\boldsymbol{v} = \frac{d\boldsymbol{r}}{dt} = \dot{\boldsymbol{r}},
+</span> and <span class="math display">
+\boldsymbol{a} = \dot{\boldsymbol{v}} = \ddot{\boldsymbol{r}}.
+</span></p>
+</section>
+<section id="interpretation-of-motion-diagrams" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation-of-motion-diagrams">Interpretation of Motion Diagrams</h3>
+<p>It is often takes time to gain a good intuition for acceleration, in particular for two- and three-dimensional motions. Motion diagrams can help in developing that intuition by visualizing velocities and accelerations.</p>
+<p>If the motion diagram is drawn using a constant time interval <span class="math inline">\Delta t</span>, we can use the displacement vector as a visualization of the velocity, since the velocity is proportional to the displacement: <span class="math display">
+\overline{\boldsymbol{v}}(t_i) = \frac{1}{\Delta t} \Delta \boldsymbol{r}(t_i)
+</span></p>
+<p>Notice that if we want to look at the change in velocity at the time <span class="math inline">t = 1.0 \mathrm{s}</span>, we would like to compare the velocity before the time <span class="math inline">t = 1.0 \mathrm{s}</span> with the velocity after the time <span class="math inline">t = 1.0 \mathrm{s}</span>. Now, the average velocity at the time <span class="math inline">t = 1.0 \mathrm{s}</span> is really the average velocity over the time interval from <span class="math inline">1.0</span> to <span class="math inline">1.5 \mathrm{s}</span>. And the average velocity at the time <span class="math inline">t = 0.5 \mathrm{s}</span> is the average velocity over the time interval from <span class="math inline">0.5</span> to <span class="math inline">1.0 \mathrm{s}</span>. Therefore, a reasonable way to characterize the change in velocity at <span class="math inline">t = 1.0 s</span> is to characterize it as the change in velocity over the time interval from <span class="math inline">0.5 \mathrm{s}</span> to <span class="math inline">1.5 \mathrm{s}</span>: <span class="math display">
+\Delta \overline{\boldsymbol{v}}(1.0\mathrm{s})  = \overline{\boldsymbol{v}}(1.0 \mathrm{s}) - \overline{\boldsymbol{v}}(0.5 \mathrm{s})
+</span></p>
+<p>We can interpret this as the average acceleration of the cheetah at <span class="math inline">t=1.0\mathrm{s}</span>, since it is approximately proportional to the average accelaration: <span class="math display">
+\overline{\boldsymbol{a}} \simeq \frac{1}{\Delta t} (\overline{\boldsymbol{v}}(1.0\mathrm{s}) - \overline{\boldsymbol{v}}(0.5\mathrm{s})).
+</span></p>
+<p>This method therefore provides a way to use the motion diagram to find approximations for the acceleration vectors in each point on the motion diagram. Incidentally, this method is the same as the simplest numerical method to find the second order time derivative of the position vector.</p>
+<ol type="1">
+<li>We find the displacements, <span class="math inline">\Delta \boldsymbol{r}</span>: <span class="math display">
+\Delta \boldsymbol{r} (t) = \boldsymbol{r}(t + \Delta t) - \boldsymbol{r}(t),
+</span> and the average velocity vectors for the motion is <span class="math display">
+\overline{\boldsymbol{v}}(t) = \frac{\Delta \boldsymbol{r}(t)}{\Delta t}.
+</span></li>
+<li>We find the change in displacements, <span class="math inline">\Delta \Delta \boldsymbol{r}</span>: <span class="math display">
+\Delta \Delta \boldsymbol{r}(t) = \Delta \boldsymbol{r}(t) - \Delta \boldsymbol{r}(t - \Delta t),
+</span> then the average accelaration vector for the motion is <span class="math display">
+\overline{\boldsymbol{a}}(t) = \frac{\Delta \Delta \boldsymbol{r}(t)}{\Delta t^2}
+=\frac{\boldsymbol{r}(t+\Delta t)+\boldsymbol{r}(t-\Delta t)-2\boldsymbol{r}(t)}{\Delta t^2}.
+</span></li>
+</ol>
+</section>
+</section>
+<section id="example-mars-express" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="example-mars-express"><span class="header-section-number">2.4</span> Example: Mars Express</h2>
+<p>This example demonstrates how we can find the velocity and acceleration from both real data and mathematical representations of the position—based on real data provided by ESA.</p>
+<p>The Mars Express probe was launched on June 2nd 2003 and reached Mars in December 2003 (see ESA’s site for more information on Mars Express). We want to use the data provided by ESA to illustrate the motion of the Mars Express, analyze the velocity and acceleration of the module, and compare with the motion of the Earth and Mars (see <a href="#fig-mars-express">Figure&nbsp;4</a>)</p>
+<div id="fig-mars-express" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="motion_2d_3d_files/mars.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;4: The trajectory of the Mars Express spacecraft illustrated as a motion diagram and the Mars Express spacecraft.</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="homework" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Homework</h1>
+<ol type="1">
+<li><p>Write a Python program to</p>
+<ul>
+<li>plot the position-time diagram, between <span class="math inline">t = 0.0\mathrm{s}</span> up to <span class="math inline">20\mathrm{s}</span>, according to <span class="math display">
+x(t) = (0.5 \mathrm{m/s^2}) t^2 - (3 \mathrm{m/s}) t + 20 \mathrm{m}.
+</span> Then, please also plot the velocity-time, accelaration-time diagram. [Hint: you should play with the small step size <span class="math inline">\Delta t</span>, such that it is small enough.]</li>
+<li>Taking the time derivative analytically to obtain the velocity <span class="math inline">v(t)</span> and accelaration <span class="math inline">a(t)</span>. [You can calculate either by your hand or using <code>sympy</code> or other CAS.]</li>
+</ul></li>
+<li><p><strong>Curving swallow.</strong> A swallow is making a quick turn to catch a fly. Its motion in the horizontal plane is captured by a camera attached to a balloon. The horizontal positions were recorded at <span class="math inline">0.1\mathrm{s}</span> intervals:</p>
+<table class="table">
+<tbody>
+<tr class="odd">
+<td><span class="math inline">t_i</span>(s)</td>
+<td>0.0</td>
+<td>0.1</td>
+<td>0.2</td>
+<td>0.3</td>
+<td>0.4</td>
+<td>0.5</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">x_i</span>(m)</td>
+<td>10.0</td>
+<td>11.0</td>
+<td>11.75</td>
+<td>12.25</td>
+<td>13.00</td>
+<td>14.00</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">y_i</span>(m)</td>
+<td>15.0</td>
+<td>15.00</td>
+<td>15.50</td>
+<td>16.50</td>
+<td>17.00</td>
+<td>17.00</td>
+</tr>
+</tbody>
+</table>
+<ol type="a">
+<li>Draw the motion diagram and the displacements for this motion.</li>
+<li>Use the motion diagram to find the average velocity vectors.</li>
+<li>Use the motion diagram to find the average acceleration vectors.</li>
+<li>When is the speed and the acceleration maximum?</li>
+</ol></li>
+<li><p><strong>Penalty shot.</strong> As a research assistant for the national soccer team, you have mounted a videocamera to record the path of the soccer ball during a penalty shot. You use a video-analysis software to extract the position of the football in the horizontal plane for each picture frame, taken at <span class="math inline">\Delta t = 0.01 \mathrm{s}</span> intervals. You find an example of a penalty shot in <a href="https://folk.universitetetioslo.no/malthe/mechbook/penalty.d">penalty.d</a>. Each line in the file consists of a time, <span class="math inline">t_i</span>, followed by <span class="math inline">x_i</span> and <span class="math inline">y_i</span>, the <span class="math inline">x</span>- and <span class="math inline">y</span>-positions of the ball respectively. [Hint: You can download <code>penalty.d</code> file. Then, you can use <code>np.loadtxt(filename,unpack=True)</code> to load <code>t</code>, <code>x</code>, <code>y</code>. You have seen this function in <a href="https://pengyangraul.github.io/phy_python/force_1d.html">Forces in 1D</a>.]</p>
+<ol type="a">
+<li>Draw a motion diagram of the motion.</li>
+<li>Plot the x- and y-positions as function of time.</li>
+<li>Does the ball hit the goal, located at <span class="math inline">x = 0\mathrm{m}</span> between <span class="math inline">y = 25.0 \mathrm{m}</span> and <span class="math inline">y = 36.0 \mathrm{m}</span>?</li>
+<li>Plot the components of the average velocities as functions of time. When is the <span class="math inline">x</span>- and <span class="math inline">y</span>-components of the velocity largest?</li>
+<li>Estimate the initial speed of the ball. And the speed of the ball when it reaches <span class="math inline">x = 0 \mathrm{m}</span>.</li>
+<li>Plot the components of the average accelerations as functions of time.</li>
+<li>Draw some of the accelerations in the same figure as the motion diagram. What do you think causes the acceleration?</li>
+</ol></li>
+</ol>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

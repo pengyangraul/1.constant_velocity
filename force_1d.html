@@ -198,7 +198,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 F_D = m(a_y + g).
 \]</span></p>
 <p>Now, if we can measure the accelaration <span class="math inline">\(a_y(t)\)</span> of the module at different times, then we can extrat the drag force <span class="math inline">\(F_D(t)\)</span> at different times as well. This is done in the following code, where we take some data for <span class="math inline">\(a_y(t)\)</span>.</p>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">'https://raw.githubusercontent.com/pengyangraul/phy_python/main/force_1d_files/reentry.txt'</span></span>
@@ -224,7 +224,11 @@ F_D = m(a_y + g).
 <h1 data-number="2"><span class="header-section-number">2</span> Force Models</h1>
 <p>In order to use Newton’s second law to determine the acceleration of an object, we need to find out how large a force is — we need to determine its magnitude and direction. We call such models “force models”. The force models may be based on direct, experimental measurements. We often call such models phenomenological or experimental force models. The force models can also be based on a more fundamental model or a model based on a microscopic view of the interactions.</p>
 <p>In the following we introduce models for some of the most common types of forces acting between macro- and microscopic objects. These models will be your toolbox for addressing physical processes-you need to continually build on this toolbox, as this will be your reservoir of physical knowledge.</p>
-<p>Examples: - If you want to describe a ball falling through air, you need mathematical expressions for the forces on the ball: both the force due to gravity and the force due to air resistance. - If you want to describe the motion of a nanometer sized particle in water close to a charged surface you need to introduce (probably sophisticated) models for the forces between the particle and the individual water molecules and between the particle and the surface.</p>
+<p>Examples:</p>
+<ul>
+<li>If you want to describe a ball falling through air, you need mathematical expressions for the forces on the ball: both the force due to gravity and the force due to air resistance.</li>
+<li>If you want to describe the motion of a nanometer sized particle in water close to a charged surface you need to introduce (probably sophisticated) models for the forces between the particle and the individual water molecules and between the particle and the surface.</li>
+</ul>
 <section id="force-model-gravity" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="force-model-gravity"><span class="header-section-number">2.1</span> Force model: Gravity</h2>
 <section id="newtons-universal-law-of-gravity" class="level3">
@@ -332,7 +336,7 @@ mg - k_v v(t) = ma.
 <section id="simplified-model-constant-velocity" class="level4">
 <h4 class="anchored" data-anchor-id="simplified-model-constant-velocity">Simplified model: Constant velocity</h4>
 <p>What will happen as the drop starts to fall? It starts from zero velocity, so initially the accelaration is <span class="math inline">\(a = g\)</span>. As the drop falls, the velocity is increasing (in magnitude), and the accelaration <span class="math inline">\(a = g - (k_v/m)v\)</span> will decrease in magnitude, and therefore approach zero.</p>
-<p>When the acceleration becomes zero, the velocity will no longer change. The drop will have reached a stationary velocity — a velocity that does not change with time. We call this velocity the terminal velocity <span class="math inline">\(v_T= mg/k_v\)</span>. We therefore expect the drop to approach the velocity <span class="math inline">\(v = -v_T\)</span> as time increases.</p>
+<p>When the acceleration becomes zero, the velocity will no longer change. The drop will have reached a stationary velocity — a velocity that does not change with time. We call this velocity the terminal velocity <span class="math inline">\(v_T= mg/k_v\)</span>. We therefore expect the drop to approach the velocity <span class="math inline">\(v = v_T\)</span> as time increases.</p>
 </section>
 <section id="full-model-with-numerical-solution" class="level4">
 <h4 class="anchored" data-anchor-id="full-model-with-numerical-solution">Full model with numerical solution</h4>
@@ -345,7 +349,7 @@ m = \rho V = \rho \frac{4\pi}{3}r^3.
 \]</span> The coefficient <span class="math inline">\(k_v\)</span> can be obtained from Stokes’ formula, <span class="math display">\[
 k_v = 6\pi r \eta,
 \]</span> with the viscosity of the air <span class="math inline">\(\eta = 1.82 \times 10^{-5}\mathrm{N s m^{-2}}\)</span></p>
-<div class="cell" data-execution_count="24">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -448,7 +452,7 @@ a(t_i) = g - \frac{ky(t_i)}{m} + \frac{F_D(v(t_i))}{m}
 v(t_i + \Delta t) = v(t_i) + a(t_i)\Delta t.
 \]</span></p>
 <p>The initial condition is <span class="math inline">\(v(0) = 0\mathrm{m/s}\)</span>, and <span class="math inline">\(a(0) = g\)</span>. The above algorithm is implemented in the following.</p>
-<div class="cell" data-execution_count="36">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
